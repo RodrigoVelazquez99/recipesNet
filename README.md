@@ -12,13 +12,14 @@ Red social para compartir recetas de cocina.
 
 ```bash
 $ python3 -m pip install Django
-$ sudo apt-get install postgresql postgresql-contrib 
+$ sudo apt-get install postgresql postgresql-contrib
 $ sudo pip3 install psycopg2-binary
+$ sudo pip install Pilow
 ```
-### Configuración de la base de datos 
+### Configuración de la base de datos
 ```bash
 $ sudo su postgres
-$ psql 
+$ psql
 $ CREATE DATABASE recipesNet;
 $ CREATE USER admin WITH PASSWORD "admin";
 $ GRANT ALL PRIVILEGES ON DATABASE recipesNet to admin;
