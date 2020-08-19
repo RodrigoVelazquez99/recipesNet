@@ -6,23 +6,115 @@ class User(models.Model):
     email = models.CharField(max_length=40, primary_key=True, unique=True)
     name = models.CharField(max_length=40)
     password = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def __eq__(self, other):
+        if isinstance (other, User) and self.email == other.email:
+            return True
+        return False
+
     class Meta:
         db_table = "user"
 
 class Admin(models.Model):
-    email = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return self.user.name
+
+    def __eq__(self, other):
+        if isinstance (other, Admin) and self.user == other.user:
+            return True
+        return False
+
     class Meta:
         db_table = "admin"
 
 class Chef(models.Model):
-    email = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     description = models.TextField()
-    followers = models.ManyToManyField("self", related_name="followees", symmetrical=False)
+    followers = models.ManyToManyField("self", through="Follow", symmetrical=False,
+                                        through_fields=('to_chef','from_chef'),
+                                        related_name="followees")
+    def __eq__(self, other):
+        if isinstance (other, Chef) and self.user == other.user:
+            return True
+        return False
+
+    def __str__(self):
+        return self.user.name
+
+    # Follow another chef or unfollow if is followed already.
+    # other : the Chef to follow
+    # return True if follow or False if unfollow.
+    def follow_chef(self, other):
+        if not Follow.objects.filter(to_chef=other, from_chef=self):
+            Follow.objects.create(to_chef=other, from_chef=self)
+            return True
+        else:
+            Follow.objects.filter(to_chef=other, from_chef=self).delete()
+        return False
+
+    # Create a post
+    def create_post(self, description, recipe_published):
+        Post.objects.create(description=description, publisher=self, recipe_published=recipe_published)
+
+    # Return all post to see, order by date in descending order
+    def refresh_post(self):
+        list_post = []
+        posters = Post.objects.all().order_by('-date')
+        for post in posters:
+            if post.publisher == self:
+                list_post.append(post)
+
+            if post in self.shared_post.all():
+                list_post.append(post)
+
+            for followee in self.followees.all():
+                if post.publisher == followee:
+                    list_post.append(post)
+                shares = post.sharers.all()
+                if followee in shares:    
+                    list_post.append(post)
+
+        return list_post
+
+    # Share a post
+    def share_post(self, post):
+        post.sharers.add(self)
+
     class Meta:
         db_table = "chef"
 
+class Follow(models.Model):
+    to_chef = models.ForeignKey(Chef, on_delete=models.CASCADE, related_name="to_chef")
+    from_chef = models.ForeignKey(Chef, on_delete=models.CASCADE, related_name="from_chef")
+
+    def __str__(self):
+        return '{} follows {}'.format(self.to_chef, self.from_chef)
+
+    def __eq__(self, other):
+        if isinstance (other, Follow) and self.to_chef == other.to_chef and self.from_chef == other.from_chef:
+            return True
+        return False
+
+    class Meta:
+        db_table = "follow"
+        unique_together = (("to_chef", "from_chef"),)
+
 class Category(models.Model):
     name = models.CharField(max_length=30, primary_key=True)
+
+    def __str__(self):
+        return self.name
+
+    def __eq__(self, other):
+        if isinstance(other, Category) and self.name == other.name:
+            return True
+        return False
+
     class Meta:
         db_table = "category"
 
@@ -35,12 +127,52 @@ class Recipe(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     owner = models.ForeignKey(Chef, on_delete=models.CASCADE)
     coments = models.ManyToManyField(Chef, related_name="recipes_coments", through="Coment")
+
+    def __str__(self):
+        return self.name
+
+    def __eq__(self, other):
+        if isinstance (other, Recipe) and self.id_recipe == other.id_recipe:
+            return True
+        return False
+
+    # Add like or unlike is has like.
+    # chef : Chef who likes the recipe.
+    # return True if like or False if unlike
+    def add_like(self, chef):
+        if chef not in self.likes.all():
+            self.likes.add(chef)
+            return True
+        else:
+            self.likes.remove(chef)
+        return False
+
+    # Add coment.
+    # chef : Chef who coment the recipe.
+    # msg : the coment.
+    def add_coment(self, chef, msg):
+        Coment.objects.create(recipe=self, chef=chef, message=msg)
+
+    # Add ingredient.
+    # ingredient : Ingredient to add.
+    def add_ingredient(self, ingredient):
+        IngredientsRecipe.objects.create(ingredient=ingredient, recipe=self)
+
     class Meta:
         db_table = "recipe"
 
 class IngredientsRecipe(models.Model):
     ingredient = models.CharField(max_length=20)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.ingredient
+
+    def __eq__(self, other):
+        if isinstance (other, IngredientsRecipe) and self.recipe == other.recipe and  self.ingredient == other.ingredient:
+            return True
+        return False
+
     class Meta:
         db_table = "ingredients_recipe"
         unique_together = (('recipe','ingredient'),)
@@ -49,14 +181,32 @@ class Coment(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
     message = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.message
+
+    def __eq__(self, other):
+        if isinstance (other, Coment) and self.recipe == other.recipe and self.chef == other.chef and self.message == other.message:
+            return True
+        return False
+
     class Meta:
         db_table = "coment"
 
 class Post(models.Model):
     id_post = models.AutoField(primary_key=True)
     description = models.TextField()
+    date = models.DateField(auto_now=True)
     publisher = models.ForeignKey(Chef, on_delete=models.CASCADE)
     recipe_published = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     sharers = models.ManyToManyField(Chef, related_name="shared_post")
+    def __str__(self):
+        return self.description
+
+    def __eq__(self, other):
+        if isinstance (other, Post) and self.id_post == other.id_post:
+            return True
+        return False
+
     class Meta:
         db_table = "post"

@@ -4,6 +4,7 @@ Red social para compartir recetas de cocina.
 
 ## Dependencias
 
+* Python 3.0 >=
 * Django 3.0.9
 * Phython 3.6.9
 * PostgreSQL 10
@@ -23,6 +24,7 @@ $ psql
 $ CREATE DATABASE recipesNet;
 $ CREATE USER admin WITH PASSWORD "admin";
 $ GRANT ALL PRIVILEGES ON DATABASE recipesNet to admin;
+$ ALTER USER admin CREATEDB;
 ```
 
 
