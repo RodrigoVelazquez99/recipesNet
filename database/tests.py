@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 from database.models import *
 
 # Test for models
@@ -6,20 +7,36 @@ class ModelsTest(TestCase):
 
     # Init the objects for the test
     def setUp(self):
-        User.objects.create(email="user@gmail.com", name="user", password="qwasasasqwqw1223231")
-        user1 = User.objects.create(email="user1@gmail.com", name="user1", password="qwasasasqwqw1223232")
+        User = get_user_model()
+        user1 = User.objects.create_user(email="user1@gmail.com", username="user1", password="qwasasasqwqw1223232")
         Admin.objects.create(user=user1)
-        user2 = User.objects.create(email="user2@gmail.com", name="user2", password="qwasasasqwqw1223233")
+        user2 = User.objects.create_user(email="user2@gmail.com", username="user2", password="qwasasasqwqw1223233")
         chef = Chef.objects.create(user=user2, description="I like to cook bakes")
-        user3 = User.objects.create(email="user3@gmail.com", name="user3", password="qwasasasqwqw1223234")
+        user3 = User.objects.create_user(email="user3@gmail.com", username="user3", password="qwasasasqwqw1223234")
         Chef.objects.create(user=user3, description="I like to cook salads")
         ct = Category.objects.create(name="salsa verde")
         Recipe.objects.create(name="Enchiladas suizas", description="Unas enchiladas suizas con bajas calorias", category=ct, owner=chef)
 
+    # Create user
+    def test_create_user(self):
+        User = get_user_model()
+        user = User.objects.create_user(email="user@gmail.com", username="user", password="foo_bar_zoo")
+        self.assertTrue(user.is_active)
+        self.assertFalse(user.is_staff)
+        self.assertFalse(user.is_superuser)
+
+    # Create superuser
+    def test_create_superuser(self):
+        User = get_user_model()
+        user = User.objects.create_superuser(email="superuser@gmail.com", username="superuser", password="foo_bar_zoo")
+        self.assertTrue(user.is_active)
+        self.assertTrue(user.is_staff)
+        self.assertTrue(user.is_superuser)
+
     # Find user saved
     def test_user(self):
-        u = User.objects.get(name="user")
-        self.assertEqual(u.name, "user")
+        u = User.objects.get(username="user1")
+        self.assertEqual(u.username, "user1")
 
     # Find only user with Admin role
     def test_admin(self):
@@ -139,7 +156,7 @@ class ModelsTest(TestCase):
     def test_post_share(self):
         user = User.objects.get(email="user2@gmail.com")
         user1 = User.objects.get(email="user3@gmail.com")
-        user2 = User.objects.create(email="user4@gmail.com", name="user4", password="qwasasasqwqw1223235")
+        user2 = User.objects.create(email="user4@gmail.com", username="user4", password="qwasasasqwqw1223235")
         chef = Chef.objects.get(user=user)
         chef1 = Chef.objects.get(user=user1)
         chef2 = Chef.objects.create(user=user2, description="I like to cook bakes")
