@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Registrarme</title>
+
+    <!-- Bootstrap 4.4.1 CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- JQuery JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Bootstrap 4.4.1 JS-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-12">
+      <div class="container pt-5">
+        <h1> Registro </h1>
+      </div>
+
+
+      <div class="container pt-4">
+        <form action="{% url 'signup' %}" method="post">
+          {% csrf_token %}
+
+          {% if form.errors %}
+            {% for field in form%}
+              {% for error in field.errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <p>{{ error }}</p>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              {% endfor %}
+            {% endfor%}
+
+          {% endif %}
+
+          <div class="form-group">
+            <input class="form-control" type="email" name="email" placeholder="Ingresa el correo" value="{{form.data.email}}" required/>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="username" placeholder="Ingresa el nombre de usuario" value="{{form.data.username}}" required/>
+          </div>
+          <div class="form-group">
+            <input id="password" class="form-control" type="password" name="password" pattern=".{8,}" placeholder="Escribe el password de al menos 8 caracteres" required/>
+          </div>
+          <div class="form-group">
+            <input id="password_confirm" class="form-control" type="password" name="password1" pattern=".{8,}" placeholder="Comprueba el password" required/>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" type="text" name="description" placeholder="Ingresa una descripción" required>{{form.data.description}}</textarea>
+          </div>
+
+          <button class="btn btn-lg btn-primary btn-block" type="submit" autofocus>Registrarme</button>
+
+        </form>
+      </div>
+    </div>
+
+      <script>
+      var password = document.getElementById("password");
+      var passwordConfirm = document.getElementById("password_confirm");
+
+      function validatePassword(){
+        if(password.value != passwordConfirm.value) {
+          passwordConfirm.setCustomValidity("No coinciden las entradas");
+        } else {
+          passwordConfirm.setCustomValidity('');
+        }
+      }
+
+      password.onchange = validatePassword;
+      passwordConfirm.onkeyup = validatePassword;
+      </script>
+
+    </body>
+</html>
