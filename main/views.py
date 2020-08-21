@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import SignUpForm
+from .forms import *
 from django.template import loader
 from database.models import Chef
 
@@ -30,11 +30,21 @@ def signup(request):
     return render(request, "signup.html", {"form":form})
 
 def login_(request):
-    return HttpResponse("Ingresar")
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            User = get_user_model()
+            user = User.objects.get(email=email)
+            login(request, user)
+            return redirect("/home")
+    else:
+        form = LoginForm()
+    return render(request, "login.html", {"form":form})
 
 def logout_(request):
     logout(request)
-    return HttpResponse("Hasta pronto")
+    return redirect("/")
 
 def home(request):
     return HttpResponse("Bienvenido")
