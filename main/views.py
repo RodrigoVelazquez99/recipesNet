@@ -9,7 +9,10 @@ from database.models import Chef
 
 
 def index(request):
-    return HttpResponse("Hola mundo")
+    if not request.user.is_authenticated:
+        return render(request, "main/index.html")
+    return redirect("/home")
+
 
 def signup(request):
     if request.method == "POST":
@@ -27,7 +30,7 @@ def signup(request):
     else:
         form = SignUpForm()
 
-    return render(request, "signup.html", {"form":form})
+    return render(request, "main/signup.html", {"form":form})
 
 def login_(request):
     if request.method == "POST":
@@ -40,11 +43,11 @@ def login_(request):
             return redirect("/home")
     else:
         form = LoginForm()
-    return render(request, "login.html", {"form":form})
+    return render(request, "main/login.html", {"form":form})
 
 def logout_(request):
     logout(request)
     return redirect("/")
 
 def home(request):
-    return HttpResponse("Bienvenido")
+    return render(request, "main/home.html")
