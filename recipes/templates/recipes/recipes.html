@@ -6,9 +6,11 @@
 
 {% block content%}
 
-  <div class="container pt-3">
-    <a class="btn btn-info" type="button" name="button" href="{% url 'edit_recipes' %}">Editar</a>
-  </div>
+  {% if recipes %}
+    <div class="container pt-5">
+      <a class="btn btn-info" type="button" href="{% url 'edit_recipes' %}">Editar</a>
+    </div>
+  {% endif %}
 
   <div class="container pt-3">
     {% if recipes %}
@@ -37,7 +39,7 @@
     {% endif %}
   </div>
 
-  <div class="container pt-3">
+  <div class="container py-5">
     <button class="btn btn-info" type="button" data-toggle="modal" data-target="#new_recipe_modal">Agregar</button>
   </div>
 
