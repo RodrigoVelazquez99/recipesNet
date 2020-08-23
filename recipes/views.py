@@ -31,9 +31,15 @@ def new_recipe(request):
             raise Exception ("Ocurrio un error con el formulario")
     return redirect("/recipes")
 
-# Show menu to edit recipes or delete 
+# Show menu to edit recipes or delete
 def edit_recipes(request):
     user = request.user
     chef = Chef.objects.get(user=user)
     recipes = Recipe.objects.filter(owner=chef)
     return render (request, "recipes/recipes_edit.html", {"recipes" : recipes})
+
+# Delete the recipe by it's id
+def delete_recipe(request, id_recipe):
+    deleted = Recipe.objects.get(pk=id_recipe)
+    deleted.delete()
+    return redirect("/recipes/edit")

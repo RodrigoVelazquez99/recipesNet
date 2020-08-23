@@ -2,12 +2,15 @@
 
 {% block head_content %}
   <title>Editar recetas</title>
+  {% load static%}
+  <script async type="text/javascript" src="{% static 'recipes/js/delete_recipe.js' %}"></script>
 {% endblock %}
 
 {% block content%}
 
 
   <div class="container pt-3">
+    {% if recipes %}
       <table class="table table-bordered">
         <thead class="thread-dark">
           <tr>
@@ -26,12 +29,34 @@
               <td>{{recipe.description}}</td>
               <td>{{recipe.category}}</td>
               <td><img src="{{recipe.image.url}}" alt="No se pudo cargar la imagen"></td>
-              <td><a class="btn btn-info" href=""></a>Editar</td>
-              <td><a class="btn btn-danger" href=""></a>Eliminar</td>
+              <td><a class="btn btn-info" href="">Editar</a></td>
+              <td><button class="btn btn-danger" data-recipe="{{ recipe.id_recipe }}" data-name="{{ recipe.name }}"
+                    data-toggle="modal" data-target="#delete_recipe_modal">Eliminar</button></td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
+    {% else %}
+      <h3 style="text-align:center">Aún no tienes recetas</h3>
+    {% endif %}
+  </div>
+
+  <div class="modal fade" role="dialog" id="delete_recipe_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Confirmación</h4>
+          </div>
+          <div class="modal-body">
+            <h5>¿Estas seguro de eliminar esta receta?</h5>
+            <h6 class="pt-3" id="recipe_modal"></h6>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a id="delete_recipe" class="btn btn-danger">Eliminar</a>
+          </div>
+        </div>
+    </div>
   </div>
 
   <div class="container py-5">
