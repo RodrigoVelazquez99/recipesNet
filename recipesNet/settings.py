@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'database',
-    'main'
+    'main',
+    'recipes'
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+# Path for uploaded files
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+
+# Url for files
+MEDIA_URL = '/media/'

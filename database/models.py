@@ -20,7 +20,7 @@ class CustomUserManager(BaseUserManager):
         user = self.create_user(email, password, username)
         user.is_staff = True
         user.is_superuser = True
-        user.is_active = True 
+        user.is_active = True
         return user
 
 class User(AbstractUser):
@@ -28,7 +28,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
     objects = CustomUserManager()
 
     def __str__(self):
@@ -159,6 +159,9 @@ class Recipe(models.Model):
         if isinstance (other, Recipe) and self.id_recipe == other.id_recipe:
             return True
         return False
+
+    def __hash__(self):
+        return super().__hash__()
 
     # Add like or unlike is has like.
     # chef : Chef who likes the recipe.
