@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from database.models import Recipe
 from database.models import Chef
 from database.models import Category
-from database.models import IngredientsRecipe
 from .forms import RecipeForm
 
 # Create your views here.
@@ -15,7 +14,24 @@ def get_recipes(request):
     chef = Chef.objects.get(user=user)
     recipes = Recipe.objects.filter(owner=chef)
     categories = Category.objects.all()
-    return render (request, "recipes/recipes.html", {"recipes" : recipes, "form" : form, "categories" : categories})
+    context = {
+        "recipes" : recipes,
+        "form" : form,
+        "categories" :categories
+    }
+    return render (request, "recipes/recipes.html", context)
+
+# Get recipe of current chef
+def get_recipe(request, id_recipe):
+    recipe = Recipe.objects.get(id_recipe=id_recipe)
+    likes = recipe.likes.count()
+    context = {
+        "recipe" : recipe,
+        "ingredients" : recipe.ingredients.all(),
+        "coments" : recipe.recipe_coments.all(),
+        "likes" : likes
+    }
+    return render (request, "recipes/recipe.html", context)
 
 # Create a new recipe
 def new_recipe(request):
@@ -46,6 +62,7 @@ def delete_recipe(request, id_recipe):
     deleted.delete()
     return redirect("/recipes/edit")
 
+# Edit the recipe by it's id
 def edit_recipe(request, id_recipe):
     user = request.user
     chef = Chef.objects.get(user=user)
@@ -70,4 +87,9 @@ def edit_recipe(request, id_recipe):
             return redirect("/recipes/edit")
     else:
         form = RecipeForm()
-    return render (request, "recipes/recipe_edit.html", {"recipe" : recipe, "ingredients_recipe" : ingredients, "form" : form})
+    context = {
+        "recipe" : recipe,
+        "ingredients_recipe" : ingredients,
+        "form" : form
+    }
+    return render (request, "recipes/recipe_edit.html", context)

@@ -21,6 +21,7 @@
             <th scope="col">Descripción</th>
             <th scope="col">Categoria</th>
             <th scope="col">Imagen</th>
+            <th scope="col">Ver</th>
           </tr>
         </thead>
         <tbody>
@@ -30,6 +31,7 @@
               <td>{{recipe.description}}</td>
               <td>{{recipe.category}}</td>
               <td> <img src="{{recipe.image.url}}" alt="No se pudo cargar la imagen"></td>
+              <td><a class="btn btn-info" href="{% url 'get_recipe' recipe.id_recipe %}">Ver</a></td>
             </tr>
           {% endfor %}
         </tbody>

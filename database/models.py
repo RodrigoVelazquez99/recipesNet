@@ -147,7 +147,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=30)
     image = models.ImageField(upload_to="recipe_img/")
     description = models.TextField()
-    likes = models.ManyToManyField(Chef, related_name="recipes_likes")
+    likes = models.ManyToManyField(Chef, related_name="recipe_likes")
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     owner = models.ForeignKey(Chef, on_delete=models.CASCADE)
     coments = models.ManyToManyField(Chef, related_name="recipes_coments", through="Coment")
@@ -193,7 +193,7 @@ class Recipe(models.Model):
     # Add new ingredients in the recipe
     def add_ingredients(self, list):
         for new in list:
-            IngredientsRecipe.objects.create(ingredient=new, recipe=self) 
+            IngredientsRecipe.objects.create(ingredient=new, recipe=self)
 
     class Meta:
         db_table = "recipe"
@@ -215,7 +215,7 @@ class IngredientsRecipe(models.Model):
         unique_together = (('recipe','ingredient'),)
 
 class Coment(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="recipe_coments")
     chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
     message = models.CharField(max_length=50)
 
