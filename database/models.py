@@ -185,12 +185,22 @@ class Recipe(models.Model):
     def add_ingredient(self, ingredient):
         IngredientsRecipe.objects.create(ingredient=ingredient, recipe=self)
 
+    # Delete all ingredients in the list from the recipe
+    def delete_ingredients(self, list):
+        for delete in list:
+            IngredientsRecipe.objects.filter(ingredient=delete, recipe=self).delete()
+
+    # Add new ingredients in the recipe
+    def add_ingredients(self, list):
+        for new in list:
+            IngredientsRecipe.objects.create(ingredient=new, recipe=self) 
+
     class Meta:
         db_table = "recipe"
 
 class IngredientsRecipe(models.Model):
     ingredient = models.CharField(max_length=20)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ingredients")
 
     def __str__(self):
         return self.ingredient
