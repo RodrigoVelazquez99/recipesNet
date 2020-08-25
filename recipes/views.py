@@ -39,9 +39,14 @@ def new_recipe(request):
         user = request.user
         chef = Chef.objects.get(user=user)
         form = RecipeForm(request.POST, request.FILES)
+        list_ingredients = request.POST.getlist('ingredient')
+        list_ingredients = list (set (list_ingredients))
         if form.is_valid():
             recipe = form.save(commit=False)
             recipe.owner = chef
+            recipe.save()
+            for ingredient in list_ingredients:
+                recipe.add_ingredient(ingredient)
             recipe.save()
             return redirect("/recipes")
         else:
