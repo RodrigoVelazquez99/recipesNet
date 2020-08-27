@@ -233,7 +233,7 @@ class Coment(models.Model):
 class Post(models.Model):
     id_post = models.AutoField(primary_key=True)
     description = models.TextField()
-    date = models.DateField(auto_now=True)
+    date = models.DateTimeField(auto_now=True)
     publisher = models.ForeignKey(Chef, on_delete=models.CASCADE)
     recipe_published = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     sharers = models.ManyToManyField(Chef, related_name="shared_post")
@@ -244,6 +244,9 @@ class Post(models.Model):
         if isinstance (other, Post) and self.id_post == other.id_post:
             return True
         return False
+
+    def __hash__(self):
+        return super().__hash__()
 
     class Meta:
         db_table = "post"

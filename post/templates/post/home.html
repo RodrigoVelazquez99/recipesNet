@@ -1,0 +1,68 @@
+{% extends 'main/base.html'%}
+
+{% block head_content %}
+<title>Inicio</title>
+{% endblock %}
+
+{% block content%}
+
+  {% if recipes %}
+    <div class="container pt-5">
+      <button class="btn btn-success btn-lg btn-block" type="button" data-toggle="modal" data-target="#new_post_modal">Publicar</button>
+    </div>
+  {% else %}
+    <div class="container pt-5">
+      <h2>Para poder publicar necesitas crear una receta</h2>
+    </div>
+  {% endif %}
+
+    {% for post in list_post %}
+      <div class="container offset-md-3 pt-5">
+        <div class="card" style="min-width: 400px; max-width: 600px;">
+          <div class="card-body">
+            <h6 class="card-title">{{ post.recipe_published.name}}</h6>
+            <p class="card-text"></p>
+          </div>
+          <div class="card-footer bg-transparent">
+            <button type="button" name="button">Like</button>
+            <button type="button" name="button">Comentar</button>
+            <button type="button" name="button">Compartir</button>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <h3 class="container pt-4" style="text-align: center">No hay publicaciones, intenta explorar</h3>
+    {% endfor %}
+
+    <div class="modal fade" role="dialog" id="new_post_modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+
+            </div>
+            <form action="{% url 'new_post' %}" method="post">
+              {% csrf_token %}
+              <div class="modal-body">
+                <div class="form-group">
+                  <textarea type="text" name="description" required> </textarea>
+                </div>
+                <div class="form-group">
+                  <select class="form-control" name="recipe_published" required>
+                    <option value="">Selecciona una receta</option>
+                    {% for recipe in recipes %}
+                    <option value="{{recipe.pk}}">{{recipe.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" name="button" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-success" type="submit">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}

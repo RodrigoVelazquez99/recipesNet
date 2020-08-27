@@ -48,6 +48,3 @@ def login_(request):
 def logout_(request):
     logout(request)
     return redirect("/")
-
-def home(request):
-    return render(request, "main/home.html")

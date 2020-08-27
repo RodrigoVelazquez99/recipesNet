@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth.decorators import login_required
 from main.views import *
+from post.views import home
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,9 +26,10 @@ urlpatterns = [
     path('', index, name="index"),
     path('signup/', signup, name="signup"),
     path('login/', login_, name="login"),
-    path('home/', login_required(home), name="home"),
     path('logout/', logout_, name="logout"),
-    path('recipes/', include('recipes.urls'))
+    path('recipes/', include('recipes.urls')),
+    path('home/', login_required(home), name="home"),
+    path('home/post/', include('post.urls'))
 ]
 
 # View sources in 'media/' in DEBUG mode or locally
