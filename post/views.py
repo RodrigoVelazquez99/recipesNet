@@ -26,3 +26,9 @@ def new_post(request):
             post.publisher = chef
             post.save()
             return redirect ('/home')
+
+# Delete the post by id
+def delete_post(request, id_post):
+    deleted = Post.objects.get(id_post=id_post)
+    deleted.delete()
+    return redirect ('/home')
