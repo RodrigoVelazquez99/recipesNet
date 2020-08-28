@@ -44,3 +44,10 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 
 ```
+
+### Detalles pendientes 
+
+* Comentar los post y ver sus comentarios en un popup.
+* Al buscar usuarios, eliminar el boton de seguir cuando ya son seguidos.
+
+
