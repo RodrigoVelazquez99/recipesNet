@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .forms import *
 from django.template import loader
 from database.models import Chef
+from database.models import Recipe
 
 # Create your views here.
 
@@ -13,6 +14,13 @@ def index(request):
         return render(request, "main/index.html")
     return redirect("/home")
 
+# Return recipes and chef that have coincidences with the query
+def search(request):
+    if request.method == "GET":
+        query = request.GET['query']
+        recipes = Recipe.objects.filter(name__istartswith=query)
+        chefs = Chef.objects.filter(user__username__istartswith=query)
+    return render(request, "main/search.html", {"query" : query, "recipes" : recipes, "chefs" : chefs})
 
 def signup(request):
     if request.method == "POST":

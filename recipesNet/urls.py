@@ -28,6 +28,7 @@ urlpatterns = [
     path('login/', login_, name="login"),
     path('logout/', logout_, name="logout"),
     path('recipes/', include('recipes.urls')),
+    path('search/', login_required(search), name="search"),
     path('home/', login_required(home), name="home"),
     path('home/post/', include('post.urls'))
 ]

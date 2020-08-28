@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+
+{% block head_content %}
+<title>Busqueda</title>
+{% endblock%}
+
+{% block content %}
+
+  <div class="container pt-5">
+    <h1>Resultados de la busqueda: {{query}}</h1>
+  </div>
+
+  <div class="container pt-4">
+    <h3>Recetas</h3>
+    <div class="card-deck" >
+      {% for recipe in recipes %}
+          <div class="card" style="min-width: 400px; padding: 2rem;">
+            <img class="card-img-top" src="{{recipe.image.url}}" style="width: 200px;  " alt="No contiene imagen">
+            <div class="card-body">
+              <h5 class="card-title">{{recipe.name}}</h5>
+              <a class="btn btn-info" href="{% url 'get_recipe' recipe.id_recipe %}">Ver mas</a>
+            </div>
+          </div>
+      {% empty %}
+      <div class="container pt4">
+        <h4 style="text-align: center;"> No se encontraron coincidencias </h4>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <div class="container pt-4">
+    <h3>Usuarios</h3>
+      {% if chefs %}
+        <div class="container py-4">
+          <table class="table table-light bordered">
+            <thead class="table-dark">
+              <th>Nombre</th>
+              <th>Acción</th>
+            </thead>
+            <tbody>
+              {% for chef in chefs %}
+                <tr>
+                  <td>{{chef.user.username}}</td>
+                  <td><a class="btn btn-success" href="#">Seguir</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="container pt4">
+          <h4 style="text-align: center;"> No se encontraron coincidencias </h4>
+        </div>
+      {% endif %}
+
+  </div>
+
+
+
+{% endblock %}
