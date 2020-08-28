@@ -29,6 +29,7 @@ urlpatterns = [
     path('logout/', logout_, name="logout"),
     path('recipes/', include('recipes.urls')),
     path('search/', login_required(search), name="search"),
+    path('follow/<str:email>/', login_required(follow), name="follow"),
     path('home/', login_required(home), name="home"),
     path('home/post/', include('post.urls'))
 ]

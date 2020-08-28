@@ -17,10 +17,20 @@ def index(request):
 # Return recipes and chef that have coincidences with the query
 def search(request):
     if request.method == "GET":
+        user = request.user
         query = request.GET['query']
         recipes = Recipe.objects.filter(name__istartswith=query)
-        chefs = Chef.objects.filter(user__username__istartswith=query)
+        chefs = Chef.objects.filter(user__username__istartswith=query).exclude(user__username=user.username)
     return render(request, "main/search.html", {"query" : query, "recipes" : recipes, "chefs" : chefs})
+
+# Follow the chef
+def follow(request, email):
+    user = request.user
+    chef = Chef.objects.get(user=user)
+    other = Chef.objects.get(user__email=email)
+    chef.follow_chef(other)
+    return HttpResponse("follow")
+
 
 def signup(request):
     if request.method == "POST":

@@ -68,7 +68,7 @@ class Chef(models.Model):
         return False
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
     # Follow another chef or unfollow if is followed already.
     # other : the Chef to follow
@@ -117,7 +117,7 @@ class Follow(models.Model):
     from_chef = models.ForeignKey(Chef, on_delete=models.CASCADE, related_name="from_chef")
 
     def __str__(self):
-        return '{} follows {}'.format(self.to_chef, self.from_chef)
+        return '{} follows {}'.format(self.from_chef, self.to_chef)
 
     def __eq__(self, other):
         if isinstance (other, Follow) and self.to_chef == other.to_chef and self.from_chef == other.from_chef:
