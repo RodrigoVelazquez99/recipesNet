@@ -29,7 +29,7 @@ def follow(request, email):
     chef = Chef.objects.get(user=user)
     other = Chef.objects.get(user__email=email)
     chef.follow_chef(other)
-    return HttpResponse("follow")
+    return redirect("/")
 
 
 def signup(request):
