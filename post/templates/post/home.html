@@ -41,7 +41,7 @@
             <div class="container offset-lg-2">
               <button class="btn btn-success" type="button" name="button">Like</button>
               <button class="btn btn-info" type="button" name="button">Comentar</button>
-              <button class="btn btn-primary" type="button" name="button">Compartir</button>
+              <button class="btn btn-primary" type="button" name="button" data-post="{{ post.id_post }}" data-toggle="modal" data-target="#share_post_modal">Compartir</button>
               {% if user.email == post.publisher.user.email %}
                 <button class="btn btn-danger" type="button" data-post="{{ post.id_post }}" data-toggle="modal" data-target="#delete_post_modal">Eliminar</button>
               {% endif %}
@@ -103,6 +103,25 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal for share a post -->
+    <div class="modal fade" role="dialog" id="share_post_modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Confirmación</h4>
+          </div>
+          <div class="modal-body">
+            <h6>¿Deseas compartir este post?</h6>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" name="button" data-dismiss="modal">Cancelar</button>
+            <a id="share_post" class="btn btn-info" type="button" name="button">Compartir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 
 {% endblock %}
