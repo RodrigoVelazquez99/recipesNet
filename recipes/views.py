@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from database.models import Recipe
 from database.models import Chef
 from database.models import Category
-from .forms import RecipeForm
+from database.models import Coment
+from .forms import *
 
 # Create your views here.
 
@@ -23,13 +24,15 @@ def get_recipes(request):
 
 # Get recipe of current chef
 def get_recipe(request, id_recipe):
+    form = ComentForm()
     recipe = Recipe.objects.get(id_recipe=id_recipe)
     likes = recipe.likes.count()
     context = {
         "recipe" : recipe,
         "ingredients" : recipe.ingredients.all(),
         "coments" : recipe.recipe_coments.all(),
-        "likes" : likes
+        "likes" : likes,
+        "form" : form
     }
     return render (request, "recipes/recipe.html", context)
 
@@ -98,3 +101,17 @@ def edit_recipe(request, id_recipe):
         "form" : form
     }
     return render (request, "recipes/recipe_edit.html", context)
+
+# Coment a recipe
+def coment_recipe(request):
+    if request.method == "POST":
+        form = ComentForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            chef = Chef.objects.get(user=user)
+            message = form.cleaned_data.get('message')
+            id_recipe = form.cleaned_data.get('id_recipe')
+            recipe = Recipe.objects.get(id_recipe=id_recipe)
+            coment = Coment(recipe=recipe, chef=chef, message=message)
+            coment.save()
+            return redirect('/recipes/' + str(id_recipe))

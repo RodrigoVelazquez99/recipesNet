@@ -2,6 +2,8 @@
 
 {% block head_content %}
 <title>{{recipe.name}}</title>
+{% load static %}
+<script async type="text/javascript" src="{% static 'recipes/js/coment_recipe.js' %}" ></script>
 {% endblock %}
 
 {% block content%}
@@ -40,6 +42,9 @@
           {{coment.message}}<br></br>
         {% endfor %}
         {% endif %}
+        <div class="container pt-2">
+          <button class="btn btn-info" type="button" name="button" data-recipe="{{ recipe.id_recipe }}" data-toggle="modal" data-target="#coment_modal">Agregar comentario</button>          
+        </div>
       </div>
 
       <div class="container pt-3 pb-5">
@@ -57,4 +62,27 @@
 
   </div>
 </div>
+
+<!-- Modal for coment a recipe -->
+<div class="modal fade" role="dialog" id="coment_modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ingresa tu comentario</h4>
+      </div>
+      <form action="{% url 'coment_recipe' %}" method="post">
+        {% csrf_token %}
+        <div class="modal-body">
+          <input type="text" name="message" placeholder="Ingresa el comentario" required>
+          <input id="input_recipe_coment" type="hidden" name="id_recipe">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <button class="btn btn-success" type="submit" >Comentar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
