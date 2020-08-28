@@ -32,3 +32,11 @@ def delete_post(request, id_post):
     deleted = Post.objects.get(id_post=id_post)
     deleted.delete()
     return redirect ('/home')
+
+# Share the post by id
+def share_post(request, id_post):
+    user = request.user
+    chef = Chef.objects.get(user=user)
+    shared = Post.objects.get(id_post=id_post)
+    chef.share_post(shared)
+    return redirect ('/home')

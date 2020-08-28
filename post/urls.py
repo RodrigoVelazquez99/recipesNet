@@ -7,5 +7,6 @@ from .views import *
 
 urlpatterns = [
     path('new/', login_required(new_post), name="new_post"),
-    path('delete/<int:id_post>', login_required(delete_post), name="delete_post")
+    path('delete/<int:id_post>', login_required(delete_post), name="delete_post"),
+    path('share/<int:id_post>', login_required(share_post), name="share_post")
 ]
