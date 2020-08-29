@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import JsonResponse
 from database.models import Recipe
 from database.models import Chef
 from database.models import Category
@@ -22,16 +22,23 @@ def get_recipes(request):
     }
     return render (request, "recipes/recipes.html", context)
 
-# Get recipe of current chef
+# Get recipe
 def get_recipe(request, id_recipe):
     form = ComentForm()
     recipe = Recipe.objects.get(id_recipe=id_recipe)
-    likes = recipe.likes.count()
+    likes_count = recipe.likes.count()
+    user = request.user
+    chef = Chef.objects.get(user=user)
+    if chef in recipe.likes.all():
+        has_like = True
+    else:
+        has_like = False
     context = {
         "recipe" : recipe,
         "ingredients" : recipe.ingredients.all(),
         "coments" : recipe.recipe_coments.all(),
-        "likes" : likes,
+        "likes" : likes_count,
+        "has_like" : has_like,
         "form" : form
     }
     return render (request, "recipes/recipe.html", context)
@@ -115,3 +122,17 @@ def coment_recipe(request):
             coment = Coment(recipe=recipe, chef=chef, message=message)
             coment.save()
             return redirect('/recipes/' + str(id_recipe))
+
+# Like a recipe
+def like_recipe(request, id_recipe):
+    recipe = Recipe.objects.get(id_recipe=id_recipe)
+    user = request.user
+    chef = Chef.objects.get(user=user)
+    flag = recipe.add_like(chef)
+    recipe.save()
+    likes_count = recipe.likes.count()
+    data = { 'content' : {
+        'flag' : flag,
+        'likes_count' : likes_count,
+    }}
+    return JsonResponse(data)

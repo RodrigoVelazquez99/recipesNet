@@ -13,7 +13,12 @@ def home(request):
     list_post = chef.refresh_post()
     form = PostForm()
     recipes = Recipe.objects.filter(owner=chef)
-    return render (request, 'post/home.html', {"list_post" : list_post, "form" : form, "recipes" : recipes})
+    context = {
+        "list_post" : list_post,
+        "form" : form,
+        "recipes" : recipes,
+    }
+    return render (request, 'post/home.html', context)
 
 # Create a new post
 def new_post(request):

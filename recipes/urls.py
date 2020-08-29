@@ -9,5 +9,6 @@ urlpatterns = [
     path('delete/<int:id_recipe>', login_required(views.delete_recipe), name='delete_recipe'),
     path('edit/<int:id_recipe>', login_required(views.edit_recipe), name='edit_recipe'),
     path('<int:id_recipe>/', login_required(views.get_recipe), name='get_recipe'),
-    path('coment/', login_required(views.coment_recipe), name="coment_recipe")
+    path('coment/', login_required(views.coment_recipe), name="coment_recipe"),
+    path('like/<int:id_recipe>', login_required(views.like_recipe), name="like_recipe")
 ]

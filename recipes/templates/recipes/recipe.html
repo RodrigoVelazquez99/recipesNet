@@ -4,6 +4,7 @@
 <title>{{recipe.name}}</title>
 {% load static %}
 <script async type="text/javascript" src="{% static 'recipes/js/coment_recipe.js' %}" ></script>
+<script async type="text/javascript" src="{% static 'recipes/js/like_recipe.js' %}"></script>
 {% endblock %}
 
 {% block content%}
@@ -43,13 +44,20 @@
         {% endfor %}
         {% endif %}
         <div class="container pt-2">
-          <button class="btn btn-info" type="button" name="button" data-recipe="{{ recipe.id_recipe }}" data-toggle="modal" data-target="#coment_modal">Agregar comentario</button>          
+          <button class="btn btn-info" type="button" name="button" data-recipe="{{ recipe.id_recipe }}" data-toggle="modal" data-target="#coment_modal">Agregar comentario</button>
         </div>
       </div>
 
       <div class="container pt-3 pb-5">
         <h5>Likes</h5>
-        {{likes}}
+        <h6 id="likes_count">{{likes}}</h6>
+        <div class="container pt-3">
+          {% if has_like %}
+          <button id="like_button" class="btn btn-outline-success" type="button" name="button" data-recipe="{{ recipe.id_recipe }}">Unlike</button>
+          {% else %}
+          <button id="like_button" class="btn btn-success" type="button" name="button" data-recipe="{{ recipe.id_recipe }}">Like</button>
+          {% endif %}
+        </div>
       </div>
 
     </div>

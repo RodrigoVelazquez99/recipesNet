@@ -40,7 +40,7 @@
           </div>
           <div class="card-footer bg-transparent">
             <div class="container offset-lg-2">
-              <button class="btn btn-success" type="button" name="button">Like</button>
+              <a class="btn btn-success" type="button" name="button">Like</a>
               <button class="btn btn-info" type="button" name="button">Comentar</button>
               <button class="btn btn-primary" type="button" name="button" data-post="{{ post.id_post }}" data-toggle="modal" data-target="#share_post_modal">Compartir</button>
               {% if user.email == post.publisher.user.email %}
