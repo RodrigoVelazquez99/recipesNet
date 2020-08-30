@@ -5,6 +5,7 @@ from .forms import *
 from django.template import loader
 from database.models import Chef
 from database.models import Recipe
+from database.models import Category
 
 # Create your views here.
 
@@ -30,6 +31,19 @@ def follow(request, email):
     other = Chef.objects.get(user__email=email)
     chef.follow_chef(other)
     return redirect("/")
+
+# Get all recipes to see
+def explore(request, category):
+    if category == "all":
+        recipes = Recipe.objects.all()
+        category_selected = "Todas las categorias"
+    else:
+        category_selected = Category.objects.get(name=category)
+        recipes = Recipe.objects.filter(category=category_selected)
+        category_selected = category_selected.name
+    categories = Category.objects.all()
+    return render (request, "main/explore.html", {"recipes" : recipes, "categories" : categories, "category_selected" : category_selected})
+
 
 
 def signup(request):

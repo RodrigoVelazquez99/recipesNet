@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+
+{% block head_content %}
+<title>Explorar</title>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+  <div class="col-2 pt-2">
+    <div class="sticky-top" style="top: 65px;">
+      <nav class="navbar">
+
+        <div class="sidebar-header">
+          <h4>Categorias</h4>
+        </div>
+
+
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a href="{% url 'explore' category='all' %}">Todas las categorias</a>
+            </li>
+            {% for category in categories %}
+              <li class="nav-item">
+                <a href="{% url 'explore' category.name %}">{{category.name}}</a>
+              </li>
+            {% endfor %}
+          </ul>
+
+      </nav>
+    </div>
+  </div>
+
+  <div class="col pt-2">
+    <div class="container py-4">
+      <h2>{{ category_selected}}</h2>
+    </div>
+
+    <div class="container">
+      {% if recipes %}
+        <div class="card-deck">
+          {% for recipe in recipes %}
+            <div class="card" style="max-width:300px; min-width:300px; padding: 50px;">
+              <img class="card-img-top" src="{{recipe.image.url}}"  alt="No contiene imagen">
+              <div class="card-body">
+                <h5 class="card-tittle">{{recipe.name}}</h5>
+                <a class="btn btn-info" href="{% url 'get_recipe' recipe.id_recipe %}">Ver mas</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="container pt-4">
+          <h4 style="text-align: center;">No hay recetas en esta categoria</h4>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

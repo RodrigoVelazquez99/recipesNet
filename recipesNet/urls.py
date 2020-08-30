@@ -30,6 +30,7 @@ urlpatterns = [
     path('recipes/', include('recipes.urls')),
     path('search/', login_required(search), name="search"),
     path('follow/<str:email>/', login_required(follow), name="follow"),
+    path('explore/<str:category>', login_required(explore), name="explore"),
     path('home/', login_required(home), name="home"),
     path('home/post/', include('post.urls'))
 ]
