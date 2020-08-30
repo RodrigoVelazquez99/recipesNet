@@ -25,7 +25,8 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     email = models.EmailField(max_length=40, primary_key=True, unique=True)
-
+    is_chef = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
