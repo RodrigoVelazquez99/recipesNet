@@ -6,5 +6,6 @@ from main.decorators import admin_required
 from .views import *
 
 urlpatterns = [
-    path('', login_required(admin_required(get_categories)), name='categories')
+    path('', login_required(admin_required(get_categories)), name='categories'),
+    path('new/', login_required(admin_required(new_category)), name='new_category')
 ]

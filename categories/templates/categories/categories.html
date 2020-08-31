@@ -3,6 +3,8 @@
 
 {% block head_content %}
   <title>Categorias</title>
+  {% load static %}
+  <script async type="text/javascript" src="{% static 'categories/js/add_category.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -33,7 +35,40 @@
   </div>
 
   <div class="container pt-3">
-    <button class="btn btn-info" type="button" name="button">Agregar</button>
+    <button class="btn btn-info" type="button" name="button" data-toggle="modal" data-target="#new_category_modal">Agregar</button>
   </div>
+
+  <div class="modal fade" role="dialog" id="new_category_modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Crear categoría</div>
+        </div>
+        <form id="form_category" method="post">
+          <div class="modal-body">
+
+            <div id="alert_error_category" class="alert alert-danger alert-dismissible fade show collapse" role="alert">
+              <p>Ya existe una categoria con el mismo nombre</p>
+              <button id="close_alert" type="button" class="close" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            {% csrf_token %}
+            <div class="form-group">
+              <input id="input_name" type="text" name="name" placeholder="Ingresa el nombre" required>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <button class="btn btn-success" type="submit">Crear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
 
 {% endblock %}

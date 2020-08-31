@@ -149,7 +149,7 @@ class Recipe(models.Model):
     image = models.ImageField(upload_to="recipe_img/")
     description = models.TextField()
     likes = models.ManyToManyField(Chef, related_name="recipe_likes")
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="recipes_category")
     owner = models.ForeignKey(Chef, on_delete=models.CASCADE)
     coments = models.ManyToManyField(Chef, related_name="recipes_coments", through="Coment")
 
