@@ -8,5 +8,6 @@ from .views import *
 urlpatterns = [
     path('', login_required(admin_required(get_categories)), name='categories'),
     path('new/', login_required(admin_required(new_category)), name='new_category'),
-    path('edit/', login_required(admin_required(edit_category)), name="edit_category")
+    path('edit/', login_required(admin_required(edit_category)), name="edit_category"),
+    path('delete/<int:id>', login_required(admin_required(delete_category)), name="delete_category")
 ]

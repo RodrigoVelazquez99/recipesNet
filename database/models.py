@@ -140,6 +140,9 @@ class Category(models.Model):
             return True
         return False
 
+    def __hash__(self):
+        return super().__hash__()        
+
     class Meta:
         db_table = "category"
 

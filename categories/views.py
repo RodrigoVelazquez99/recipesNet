@@ -50,3 +50,9 @@ def edit_category(request):
         }
     }
     return JsonResponse(data)
+
+# Delete a category by id
+def delete_category(request, id):
+    deleted = Category.objects.get(id=id)
+    deleted.delete()
+    return redirect('/categories')    

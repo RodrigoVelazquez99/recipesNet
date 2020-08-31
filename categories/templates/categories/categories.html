@@ -6,6 +6,7 @@
   {% load static %}
   <script async type="text/javascript" src="{% static 'categories/js/add_category.js' %}"></script>
   <script async type="text/javascript" src="{% static 'categories/js/edit_category.js' %}"></script>
+  <script async type="text/javascript" src="{% static 'categories/js/delete_category.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -29,7 +30,7 @@
           <tr>
             <td>{{ category.name }}</td>
             <td><button class="btn btn-info" type="button" data-name="{{ category.name }}" data-target="#edit_category_modal" data-toggle="modal">Editar</button></td>
-            <td><button class="btn btn-danger" type="button" >Eliminar</button></td>
+            <td><button class="btn btn-danger" type="button" data-category="{{ category.id }}" data-target="#delete_category_modal" data-toggle="modal">Eliminar</button></td>
           </tr>
           {% endfor %}
         </tbody>
@@ -101,6 +102,24 @@
             <button class="btn btn-success" type="submit" >Editar</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" role="dialog" id="delete_category_modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title"><h4>Confirmación</h4></div>
+        </div>
+        <div class="modal-body">
+          <p>¿Seguro que deseas eliminar esta categoria?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a id="button_delete_category" class="btn btn-danger" type="submit" >Eliminar</a>
+        </div>
       </div>
     </div>
   </div>
