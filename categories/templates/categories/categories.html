@@ -5,6 +5,7 @@
   <title>Categorias</title>
   {% load static %}
   <script async type="text/javascript" src="{% static 'categories/js/add_category.js' %}"></script>
+  <script async type="text/javascript" src="{% static 'categories/js/edit_category.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -14,6 +15,7 @@
   </div>
 
   <div class="container pt-4">
+    {% if categories %}
     <table class="table table-bordered">
         <thead class="thead-dark">
           <tr>
@@ -26,12 +28,17 @@
           {% for category in categories %}
           <tr>
             <td>{{ category.name }}</td>
-            <td><button class="btn btn-info" type="button" >Editar</button></td>
+            <td><button class="btn btn-info" type="button" data-name="{{ category.name }}" data-target="#edit_category_modal" data-toggle="modal">Editar</button></td>
             <td><button class="btn btn-danger" type="button" >Eliminar</button></td>
           </tr>
           {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <div class="container pt-4">
+      <h4 style="text-align: center;">No hay categorias</h4>
+    </div>
+    {% endif %}
   </div>
 
   <div class="container pt-3">
@@ -63,6 +70,35 @@
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
             <button class="btn btn-success" type="submit">Crear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" role="dialog" id="edit_category_modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Editar categoria</div>
+        </div>
+        <form id="form_category_edit" method="post">
+          <div class="modal-body">
+
+            <div id="alert_error_category_edit" class="alert alert-danger alert-dismissible fade show collapse" role="alert">
+              <p>Ya existe una categoria con el mismo nombre</p>
+              <button id="close_alert_edit" type="button" class="close" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            {% csrf_token %}
+            <input id="input_name_edit" type="text" name="new_name" required>
+            <input id="input_old_name_edit" type="hidden" name="old_name">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <button class="btn btn-success" type="submit" >Editar</button>
           </div>
         </form>
       </div>

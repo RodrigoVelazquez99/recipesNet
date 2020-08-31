@@ -28,3 +28,25 @@ def new_category(request):
         }
     }
     return JsonResponse(data)
+
+# Edit the given category
+def edit_category(request):
+    new_name = request.POST.get('new_name')
+    old_name = request.POST.get('old_name')
+    if new_name == old_name:
+        repeated_category = False
+    else:
+        if Category.objects.filter(name=new_name):
+            repeated_category = True
+        else:
+            edited = Category.objects.get(name=old_name)
+            edited.name = new_name
+            edited.save()
+            repeated_category = False
+    data = {
+        'content' : {
+            'repeated_category' : repeated_category,
+            'redirect_url' : '/categories'
+        }
+    }
+    return JsonResponse(data)

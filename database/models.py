@@ -130,7 +130,7 @@ class Follow(models.Model):
         unique_together = (("to_chef", "from_chef"),)
 
 class Category(models.Model):
-    name = models.CharField(max_length=30, primary_key=True)
+    name = models.CharField(max_length=30)
 
     def __str__(self):
         return self.name
