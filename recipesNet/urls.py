@@ -34,7 +34,8 @@ urlpatterns = [
     path('home/', login_required(home), name="home"),
     path('home/post/', include('post.urls')),
     path('categories/', include('categories.urls')),
-    path('adminsite/', login_required(admin_home), name="admin_home")
+    path('adminsite/', login_required(admin_home), name="admin_home"),
+    path('profile/', include('users.urls'))
 ]
 
 # View sources in 'media/' in DEBUG mode or locally
