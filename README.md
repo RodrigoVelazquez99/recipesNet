@@ -52,3 +52,4 @@ Quit the server with CONTROL-C.
 * Al buscar usuarios, eliminar el boton de seguir cuando ya son seguidos.
 * Apartar los metodos de follow, search, explore a una app 'users'.
 * Mejorar las vistas con CSS.
+* Añadir los permisos de rol en cada función para cada rol.
