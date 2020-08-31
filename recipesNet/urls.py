@@ -32,7 +32,9 @@ urlpatterns = [
     path('follow/<str:email>/', login_required(follow), name="follow"),
     path('explore/<str:category>', login_required(explore), name="explore"),
     path('home/', login_required(home), name="home"),
-    path('home/post/', include('post.urls'))
+    path('home/post/', include('post.urls')),
+    path('categories/', include('categories.urls')),
+    path('adminsite/', login_required(admin_home), name="admin_home")
 ]
 
 # View sources in 'media/' in DEBUG mode or locally

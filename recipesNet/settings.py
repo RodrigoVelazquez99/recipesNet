@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'database',
     'main',
     'recipes',
-    'post'
+    'post',
+    'categories'
 ]
 
 MIDDLEWARE = [

@@ -1,44 +1,71 @@
+{% if user.is_chef %}
+
+  <nav class="navbar bg-dark">
+
+    <a class="navbar-brand" href="/home">RecipesNet</a>
+
+    <div class="container">
+
+      <!-- Barra de búsqueda -->
+      <form class="form-inline" action="{% url 'search' %}" method="get">
+        <input class="form-control mr-sm-2" type="text" name="query" placeholder="Ingresa tu busqueda" width= 100 required>
+        <button class="btn btn-success" type="submit">Buscar</button>
+      </form>
+
+      <ul class="nav nav-pills">
+
+        <div class="nav-item">
+          <a class="nav-link" href="/">Ver Inicio</a>
+        </div>
+
+        <div class="nav-item">
+          <a class="nav-link" href="{% url 'explore' 'all' %}">Explorar</a>
+        </div>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/following">Seguidos</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/recipes">Mis recetas</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/favourites">Mis favoritas</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">Perfil</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Salir</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+{% else %}
+
 <nav class="navbar bg-dark">
 
-  <a class="navbar-brand" href="/home">RecipesNet</a>
+  <div class="navbar-brand">RecipesNet</div>
 
   <div class="container">
-
-    <!-- Barra de búsqueda -->
-    <form class="form-inline" action="{% url 'search' %}" method="get">
-      <input class="form-control mr-sm-2" type="text" name="query" placeholder="Ingresa tu busqueda" width= 100 required>
-      <button class="btn btn-success" type="submit">Buscar</button>
-    </form>
-
     <ul class="nav nav-pills">
 
       <div class="nav-item">
-        <a class="nav-link" href="/">Ver Inicio</a>
+        <a class="nav-link" href="#">Administrar usuarios</a>
       </div>
 
       <div class="nav-item">
-        <a class="nav-link" href="{% url 'explore' 'all' %}">Explorar</a>
+        <a class="nav-link" href="{% url 'categories' %}">Administrar categorias</a>
       </div>
-
-      <li class="nav-item">
-        <a class="nav-link" href="/following">Seguidos</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="/recipes">Mis recetas</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="/favourites">Mis favoritas</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="/profile">Perfil</a>
-      </li>
 
       <li class="nav-item">
         <a class="nav-link" href="/logout">Salir</a>
       </li>
     </ul>
   </div>
+
 </nav>
+{% endif %}

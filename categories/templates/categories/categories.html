@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+
+{% block head_content %}
+  <title>Categorias</title>
+{% endblock %}
+
+{% block content %}
+
+  <div class="container pt-3">
+    <h2>Categorias</h2>
+  </div>
+
+  <div class="container pt-4">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Nombre</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for category in categories %}
+          <tr>
+            <td>{{ category.name }}</td>
+            <td><button class="btn btn-info" type="button" >Editar</button></td>
+            <td><button class="btn btn-danger" type="button" >Eliminar</button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
+  <div class="container pt-3">
+    <button class="btn btn-info" type="button" name="button">Agregar</button>
+  </div>
+
+{% endblock %}

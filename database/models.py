@@ -47,7 +47,7 @@ class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
     def __eq__(self, other):
         if isinstance (other, Admin) and self.user == other.user:

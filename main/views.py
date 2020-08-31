@@ -45,6 +45,8 @@ def explore(request, category):
     return render (request, "main/explore.html", {"recipes" : recipes, "categories" : categories, "category_selected" : category_selected})
 
 
+def admin_home(request):
+    return render(request, "main/admin_home.html")
 
 def signup(request):
     if request.method == "POST":
@@ -72,6 +74,8 @@ def login_(request):
             User = get_user_model()
             user = User.objects.get(email=email)
             login(request, user)
+            if user.is_admin:
+                return redirect ("/adminsite")
             return redirect("/home")
     else:
         form = LoginForm()

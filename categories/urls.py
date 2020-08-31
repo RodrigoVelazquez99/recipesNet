@@ -1,0 +1,10 @@
+from django.urls import path
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.conf.urls.static import static
+from main.decorators import admin_required
+from .views import *
+
+urlpatterns = [
+    path('', login_required(admin_required(get_categories)), name='categories')
+]
