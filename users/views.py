@@ -12,13 +12,12 @@ def get_profile(request):
 # Update the username of current chef
 def edit_profile_username(request):
     new_username = request.POST.get('new_username')
-    old_username = request.POST.get('old_username')
+    user = request.user
     repeated_username = False
-    if new_username != old_username:
-        if Chef.objects.filter(user__username=new_username):
+    if new_username != user.username:
+        if Chef.objects.filter(user__username=new_username).exclude(user=user):
             repeated_username = True
         else:
-            user = request.user
             chef = Chef.objects.get(user=user)
             chef.user.username = new_username
             chef.user.save()

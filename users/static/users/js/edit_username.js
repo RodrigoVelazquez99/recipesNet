@@ -6,13 +6,11 @@ $('#edit_name_modal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var username = button.data('username');
     $('#input_new_username').val(username);
-    $('#input_old_username').val(username);
 });
 
 // Delete values in modal form when close and close alert if exist
 $('#edit_name_modal').on('hidden.bs.modal', function() {
   $('#input_new_username').val('');
-  $('#input_old_username').val('');
   $('#alert_username_edit').hide();
 });
 
