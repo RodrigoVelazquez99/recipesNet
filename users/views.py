@@ -30,3 +30,12 @@ def edit_profile_username(request):
         }
     }
     return JsonResponse(data)
+
+# Save the new description
+def edit_profile_description(request):
+    user = request.user
+    new_description = request.POST.get('new_description')
+    chef = Chef.objects.get(user=user)
+    chef.description = new_description
+    chef.save()
+    return redirect('/profile')

@@ -2,7 +2,7 @@
 $('#alert_username_edit').hide();
 
 // Insert current username in modal on load
-$('#edit_name_modal').on('shown.bs.modal', function (event) {
+$('#edit_name_modal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var username = button.data('username');
     $('#input_new_username').val(username);
