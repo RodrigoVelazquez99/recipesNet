@@ -1,7 +1,9 @@
 {% extends 'main/base.html' %}
 
 {% block head_content %}
-<title>Perfil</title>
+  <title>Perfil</title>
+  {% load static %}
+  <script async src="{% static 'users/js/edit_username.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -9,7 +11,7 @@
   <div class="container pt-5">
     <h1>{{ chef.user.username }}</h1>
     {% if user == chef.user %}
-      <button class="btn btn-info" type="button" name="button">Editar</button>
+      <button class="btn btn-info" type="button" name="button" data-username="{{ chef.user.username }}" data-toggle="modal" data-target="#edit_name_modal">Editar</button>
     {% endif %}
   </div>
 
@@ -36,5 +38,36 @@
     </div>
   {% endif %}
 
+
+  <!-- Modal for edit username -->
+  <div class="modal fade" role="dialog" id="edit_name_modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar nombre</h4>
+        </div>
+        <form id="form_edit_username" method="post">
+          <div class="modal-body">
+
+            <div id="alert_username_edit" class="alert alert-danger alert-dismissible fade show collapse" role="alert">
+              <p>Ya existe un chef con el mismo nombre</p>
+              <button id="close_alert_edit_username" type="button" class="close" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            {% csrf_token %}
+
+            <input id="input_new_username" type="text" name="new_username" required>
+            <input id="input_old_username" type="hidden" name="old_username">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <button class="btn btn-success" type="submit">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
