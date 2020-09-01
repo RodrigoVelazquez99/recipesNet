@@ -39,3 +39,11 @@ def edit_profile_description(request):
     chef.description = new_description
     chef.save()
     return redirect('/profile')
+
+# Save the new password
+def edit_profile_password(request):
+    user = request.user
+    new_password = request.POST.get('password')
+    user.set_password(new_password)
+    user.save()
+    return redirect('/logout')
