@@ -9,5 +9,6 @@ urlpatterns = [
     path('new/', login_required(new_post), name="new_post"),
     path('delete/<int:id_post>', login_required(delete_post), name="delete_post"),
     path('share/<int:id_post>', login_required(share_post), name="share_post"),
-    path('like/<int:id_post>', login_required(like_post), name="like_post")
+    path('like/<int:id_post>', login_required(like_post), name="like_post"),
+    path('coment/<int:id_post>', login_required(coment_post), name="coment_post")
 ]

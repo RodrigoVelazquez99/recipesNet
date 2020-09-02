@@ -222,6 +222,7 @@ class Coment(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="recipe_coments")
     chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
     message = models.CharField(max_length=50)
+    date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.message
@@ -242,6 +243,7 @@ class Post(models.Model):
     recipe_published = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     sharers = models.ManyToManyField(Chef, related_name="shared_post")
     likes = models.ManyToManyField(Chef, related_name="post_likes")
+    coments = models.ManyToManyField(Chef, related_name="post_coments", through="ComentPost")
     def __str__(self):
         return self.description
 
@@ -261,8 +263,32 @@ class Post(models.Model):
             self.likes.remove(chef)
         return False
 
+    # Add coment
+    # chef : Chef who coment the post.  
+    # msg : the coment.
+    def add_coment(self, chef, msg):
+        ComentPost.objects.create(post=self, chef=chef, message=msg)
+
+
     def __hash__(self):
         return super().__hash__()
 
     class Meta:
         db_table = "post"
+
+class ComentPost(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="post_coments")
+    chef = models.ForeignKey(Chef, on_delete=models.CASCADE)
+    message = models.CharField(max_length=50)
+    date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.message
+
+    def __eq__(self, other):
+        if isinstance(other, ComentPost) and self.post == other.post and self.chef == other.chef and self.message == other.message:
+            return True
+        return False
+
+    class Meta:
+        db_table = "coment_post"

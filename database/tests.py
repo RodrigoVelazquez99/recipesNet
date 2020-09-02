@@ -194,3 +194,17 @@ class ModelsTest(TestCase):
         list_post = chef.refresh_post()
         # chef see the post that shared chef1 and the same post that published chef2
         self.assertEqual(len(list_post), 2)
+
+    # Coment a post
+    def test_recipe_post(self):
+        user = User.objects.get(email="user2@gmail.com")
+        chef = Chef.objects.get(user=user)
+        recipe = Recipe.objects.get(name="Enchiladas suizas")
+        chef.create_post(description="Una nueva presentación de mis enchiladas", recipe_published=recipe)
+        post = Post.objects.get(publisher=chef)
+        msg = "Excelente platillo !!!"
+        self.assertEqual(post.coments.count(), 0)
+        post.add_coment(chef, msg)
+        self.assertEqual(post.coments.count(), 1)
+        post.add_coment(chef, msg)
+        self.assertEqual(post.coments.count(), 2)

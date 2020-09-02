@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.template import loader
 from database.models import Chef
 from database.models import Recipe
+from database.models import ComentPost
 from .forms import *
 # Create your views here.
 
@@ -47,6 +48,7 @@ def share_post(request, id_post):
     chef.share_post(shared)
     return redirect ('/home')
 
+# Like the post by id
 def like_post(request, id_post):
     user = request.user
     chef = Chef.objects.get(user=user)
@@ -61,3 +63,15 @@ def like_post(request, id_post):
         }
     }
     return JsonResponse(data)
+
+# Coment the post by id
+def coment_post(request, id_post):
+    if request.method == 'GET':
+        post = Post.objects.get(id_post=id_post)
+        coments = ComentPost.objects.filter(post=post).values()
+        data = {
+            'content' : {
+                'coments' : list(coments)
+            }
+        }
+        return JsonResponse(data)
