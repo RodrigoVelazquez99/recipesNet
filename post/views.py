@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.template import loader
 from database.models import Chef
 from database.models import Recipe
@@ -17,6 +17,7 @@ def home(request):
         "list_post" : list_post,
         "form" : form,
         "recipes" : recipes,
+        "chef" : chef
     }
     return render (request, 'post/home.html', context)
 
@@ -45,3 +46,18 @@ def share_post(request, id_post):
     shared = Post.objects.get(id_post=id_post)
     chef.share_post(shared)
     return redirect ('/home')
+
+def like_post(request, id_post):
+    user = request.user
+    chef = Chef.objects.get(user=user)
+    post = Post.objects.get(id_post=id_post)
+    flag = post.add_like(chef)
+    likes_count = post.likes.count()
+    post.save()
+    data = {
+        'content' : {
+            'flag' : flag,
+            'likes_count' : likes_count
+        }
+    }
+    return JsonResponse(data)

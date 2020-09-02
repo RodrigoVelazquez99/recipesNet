@@ -141,7 +141,7 @@ class Category(models.Model):
         return False
 
     def __hash__(self):
-        return super().__hash__()        
+        return super().__hash__()
 
     class Meta:
         db_table = "category"
@@ -241,12 +241,24 @@ class Post(models.Model):
     publisher = models.ForeignKey(Chef, on_delete=models.CASCADE)
     recipe_published = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     sharers = models.ManyToManyField(Chef, related_name="shared_post")
+    likes = models.ManyToManyField(Chef, related_name="post_likes")
     def __str__(self):
         return self.description
 
     def __eq__(self, other):
         if isinstance (other, Post) and self.id_post == other.id_post:
             return True
+        return False
+
+    # Add like or unlike if has like.
+    # chef : Chef who likes the recipe.
+    # return True if like or False if unlike.
+    def add_like(self, chef):
+        if chef not in self.likes.all():
+            self.likes.add(chef)
+            return True
+        else:
+            self.likes.remove(chef)
         return False
 
     def __hash__(self):

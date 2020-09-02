@@ -132,6 +132,21 @@ class ModelsTest(TestCase):
         ingredients = IngredientsRecipe.objects.filter(recipe=recipe)
         self.assertEqual(len(ingredients), 2)
 
+    # Set like to post or unlike if has like
+    def test_post_like(self):
+        user = User.objects.get(email="user2@gmail.com")
+        user1 = User.objects.get(email="user3@gmail.com")
+        chef = Chef.objects.get(user=user)
+        chef1 = Chef.objects.get(user=user1)
+        recipe = Recipe.objects.get(name="Enchiladas suizas")
+        chef1.create_post(description="Una nueva presentación de mis enchiladas", recipe_published=recipe)
+        post = Post.objects.get(publisher=chef1)
+        # Like to post
+        flag = post.add_like(chef)
+        self.assertTrue(flag)
+        # Unlike to post
+        flag = post.add_like(chef)
+        self.assertFalse(flag)
 
     # Publish a post and followers will see it
     def test_post_publish(self):

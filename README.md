@@ -48,7 +48,6 @@ Quit the server with CONTROL-C.
 ### Detalles pendientes
 
 * Comentar los post y ver sus comentarios en un popup.
-* Dar like a los post y dinamicamente ver sus likes.
 * Al buscar usuarios, eliminar el boton de seguir cuando ya son seguidos.
 * Apartar los metodos de follow, search, explore a una app 'users'.
 * Mejorar las vistas con CSS.
