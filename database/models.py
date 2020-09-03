@@ -238,7 +238,7 @@ class Coment(models.Model):
 class Post(models.Model):
     id_post = models.AutoField(primary_key=True)
     description = models.TextField()
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now_add=True)
     publisher = models.ForeignKey(Chef, on_delete=models.CASCADE)
     recipe_published = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     sharers = models.ManyToManyField(Chef, related_name="shared_post")
@@ -264,7 +264,7 @@ class Post(models.Model):
         return False
 
     # Add coment
-    # chef : Chef who coment the post.  
+    # chef : Chef who coment the post.
     # msg : the coment.
     def add_coment(self, chef, msg):
         ComentPost.objects.create(post=self, chef=chef, message=msg)

@@ -47,7 +47,7 @@
               {% else %}
                 <button id="like_button_{{ post.id_post }}" class="btn btn-success" type="button" data-post="{{ post.id_post }}">Like</button>
               {% endif %}
-              <button class="btn btn-info" type="button" data-post="{{ post.id_post }}" data-toggle="modal" data-target="#coment_post_modal">Comentarios</button>
+              <button id="coment_button_{{ post.id_post }}" class="btn btn-info" type="button" data-post="{{ post.id_post }}" data-toggle="modal" data-target="#coment_post_modal">Comentarios</button>
               <button class="btn btn-primary" type="button" name="button" data-post="{{ post.id_post }}" data-toggle="modal" data-target="#share_post_modal">Compartir</button>
               {% if user.email == post.publisher.user.email %}
                 <button class="btn btn-danger" type="button" data-post="{{ post.id_post }}" data-toggle="modal" data-target="#delete_post_modal">Eliminar</button>
@@ -137,14 +137,17 @@
             <h4 class="modal-title">Comentarios</h4>
           </div>
           <form id="form_coment_post" method="post">
+            {% csrf_token %}
             <div class="modal-body">
               <div id="coments_post">
-                <!-- Comentarios del post -->
-
+                <!-- Post coments -->
               </div>
             </div>
+            <div class="form-group offset-lg-1">
+              <input id="new_coment" type="text" name="coment" placeholder="Ingresa tu comentario" size="40" required>
 
-            <input type="text" name="coment" placeholder="Ingresa tu comentario" required>
+            </div>
+            <input id="id_post_coment" type="hidden">
 
             <div class="modal-footer">
               <button class="btn btn-secondary" type="button" name="button" data-dismiss="modal">Cerrar</button>
