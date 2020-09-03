@@ -19,18 +19,13 @@ def index(request):
 def search(request):
     if request.method == "GET":
         user = request.user
+        chef = Chef.objects.get(user=user)
         query = request.GET['query']
         recipes = Recipe.objects.filter(name__istartswith=query)
         chefs = Chef.objects.filter(user__username__istartswith=query).exclude(user__username=user.username)
-    return render(request, "main/search.html", {"query" : query, "recipes" : recipes, "chefs" : chefs})
+        followees = chef.followees.all()
+    return render(request, "main/search.html", {"query" : query, "recipes" : recipes, "chefs" : chefs, "followees" : followees })
 
-# Follow the chef
-def follow(request, email):
-    user = request.user
-    chef = Chef.objects.get(user=user)
-    other = Chef.objects.get(user__email=email)
-    chef.follow_chef(other)
-    return redirect("/")
 
 # Get all recipes to see
 def explore(request, category):

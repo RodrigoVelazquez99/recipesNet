@@ -46,3 +46,18 @@ def edit_profile_password(request):
     user.set_password(new_password)
     user.save()
     return redirect('/logout')
+
+# Get the chefs that current chef follow
+def following(request):
+    user = request.user
+    chef = Chef.objects.get(user=user)
+    followees = chef.followees.all()
+    return render(request, 'users/following.html', {'followees' : followees})
+
+# Follow the chef
+def follow(request, email):
+    user = request.user
+    chef = Chef.objects.get(user=user)
+    other = Chef.objects.get(user__email=email)
+    chef.follow_chef(other)
+    return redirect("/profile/following/")

@@ -47,7 +47,6 @@ Quit the server with CONTROL-C.
 
 ### Detalles pendientes
 
-* Al buscar usuarios, eliminar el boton de seguir cuando ya son seguidos.
-* Apartar los metodos de follow, search, explore a una app 'users'.
 * Mejorar las vistas con CSS.
 * Añadir los permisos de rol en cada función para cada rol.
+* Añadir la opción de ver recetas favoritas.

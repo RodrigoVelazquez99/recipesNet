@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+
+{% block head_content %}
+<title>Siguiendo</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="containter px-5 pt-5">
+  <h3>Siguiendo</h3>
+</div>
+
+{% if followees %}
+  <div class="containter px-4 py-5">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for followee in followees %}
+          <tr>
+            <td>{{ followee.user.username }}</td>
+            <td style="width: 15%" ><a class="btn btn-danger" type="button" href="{% url 'follow' followee.user.email %}" >Dejar de seguir</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <h4 style="text-align : center;">Aún no sigues personas</h4>
+{% endif %}
+
+{% endblock %}

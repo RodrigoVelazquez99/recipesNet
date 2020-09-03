@@ -43,7 +43,11 @@
               {% for chef in chefs %}
                   <tr>
                     <td>{{chef.user.username}}</td>
-                    <td><a class="btn btn-success" href="{% url 'follow' chef.user.email %}">Seguir</a></td>
+                    {% if chef not in followees %}
+                      <td><a class="btn btn-success" href="{% url 'follow' chef.user.email %}">Seguir</a></td>
+                    {% else %}
+                      <td><a class="btn btn-danger" href="{% url 'follow' chef.user.email %}">Dejar de seguir</a></td>
+                    {% endif%}
                   </tr>
               {% endfor %}
             </tbody>
