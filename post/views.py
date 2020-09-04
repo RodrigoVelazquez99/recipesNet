@@ -1,15 +1,12 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from django.template import loader
-from database.models import Chef
 from database.models import Recipe
 from .forms import *
 # Create your views here.
 
 def home(request):
     user = request.user
-    chef = Chef.objects.get(user=user)
+    chef = user.chef
     list_post = chef.refresh_post()
     form = PostForm()
     recipes = Recipe.objects.filter(owner=chef)
@@ -25,7 +22,7 @@ def home(request):
 def new_post(request):
     if request.method == "POST":
         user = request.user
-        chef = Chef.objects.get(user=user)
+        chef = user.chef
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
@@ -42,7 +39,7 @@ def delete_post(request, id_post):
 # Share the post by id
 def share_post(request, id_post):
     user = request.user
-    chef = Chef.objects.get(user=user)
+    chef = user.chef
     shared = Post.objects.get(id_post=id_post)
     chef.share_post(shared)
     return redirect ('/home')
@@ -50,7 +47,7 @@ def share_post(request, id_post):
 # Like the post by id
 def like_post(request, id_post):
     user = request.user
-    chef = Chef.objects.get(user=user)
+    chef = user.chef
     post = Post.objects.get(id_post=id_post)
     flag = post.add_like(chef)
     likes_count = post.likes.count()
@@ -78,7 +75,7 @@ def coment_post(request, id_post):
         post = Post.objects.get(id_post=id_post)
         new_coment = request.POST.get('coment')
         user = request.user
-        chef = Chef.objects.get(user=user)
+        chef = user.chef
         post.add_coment(chef=chef, msg=new_coment)
         post.save()
         return JsonResponse({'ok' : True})

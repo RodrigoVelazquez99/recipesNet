@@ -6,7 +6,7 @@ from database.models import Chef
 
 def get_profile(request):
     user = request.user
-    chef = Chef.objects.get(user=user)
+    chef = user.chef
     return render (request, 'users/profile.html', {'chef' : chef})
 
 # Update the username of current chef
@@ -34,7 +34,7 @@ def edit_profile_username(request):
 def edit_profile_description(request):
     user = request.user
     new_description = request.POST.get('new_description')
-    chef = Chef.objects.get(user=user)
+    chef = user.chef
     chef.description = new_description
     chef.save()
     return redirect('/profile')
@@ -50,14 +50,14 @@ def edit_profile_password(request):
 # Get the chefs that current chef follow
 def following(request):
     user = request.user
-    chef = Chef.objects.get(user=user)
+    chef = user.chef
     followees = chef.followees.all()
     return render(request, 'users/following.html', {'followees' : followees})
 
 # Follow the chef
 def follow(request, email):
     user = request.user
-    chef = Chef.objects.get(user=user)
+    chef = user.chef
     other = Chef.objects.get(user__email=email)
     chef.follow_chef(other)
     return redirect("/profile/following/")
@@ -65,6 +65,6 @@ def follow(request, email):
 # Get the recipes wich the chef likes
 def favourites(request):
     user = request.user
-    chef = Chef.objects.get(user=user)
+    chef = user.chef
     recipes = chef.recipe_likes.all()
     return render (request, 'users/favourite_recipes.html', {'recipes' : recipes})

@@ -44,7 +44,7 @@ class User(AbstractUser):
         db_table = "user"
 
 class Admin(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="admin")
 
     def __str__(self):
         return self.user.username
@@ -58,7 +58,7 @@ class Admin(models.Model):
         db_table = "admin"
 
 class Chef(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="chef")
     description = models.TextField()
     followers = models.ManyToManyField("self", through="Follow", symmetrical=False,
                                         through_fields=('to_chef','from_chef'),

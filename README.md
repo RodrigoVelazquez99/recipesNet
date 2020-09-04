@@ -49,3 +49,4 @@ Quit the server with CONTROL-C.
 
 * Mejorar las vistas con CSS.
 * Añadir los permisos de rol en cada función para cada rol.
+* Cuando se da like a un post compartido se debe actualizar dinamicamente todos los botones de like.

@@ -1,8 +1,6 @@
-from django.contrib.auth import login, authenticate, logout, get_user_model
+from django.contrib.auth import login, logout, get_user_model
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .forms import *
-from django.template import loader
 from database.models import Chef
 from database.models import Recipe
 from database.models import Category
@@ -19,7 +17,7 @@ def index(request):
 def search(request):
     if request.method == "GET":
         user = request.user
-        chef = Chef.objects.get(user=user)
+        chef = user.chef
         query = request.GET['query']
         recipes = Recipe.objects.filter(name__istartswith=query)
         chefs = Chef.objects.filter(user__username__istartswith=query).exclude(user__username=user.username)
