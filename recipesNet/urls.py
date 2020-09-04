@@ -20,6 +20,7 @@ from main.views import *
 from post.views import home
 from django.conf import settings
 from django.conf.urls.static import static
+from main.decorators import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,13 +28,13 @@ urlpatterns = [
     path('signup/', signup, name="signup"),
     path('login/', login_, name="login"),
     path('logout/', logout_, name="logout"),
-    path('home/', login_required(home), name="home"),
-    path('search/', login_required(search), name="search"),
-    path('explore/<str:category>', login_required(explore), name="explore"),
+    path('home/', chef_required (login_required(home)), name="home"),
+    path('search/', chef_required (login_required(search)), name="search"),
+    path('explore/<str:category>', chef_required (login_required(explore)), name="explore"),
     path('recipes/', include('recipes.urls')),
     path('home/post/', include('post.urls')),
     path('categories/', include('categories.urls')),
-    path('adminsite/', login_required(admin_home), name="admin_home"),
+    path('adminsite/', admin_required (login_required(admin_home)), name="admin_home"),
     path('profile/', include('users.urls'))
 ]
 

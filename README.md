@@ -48,4 +48,3 @@ Quit the server with CONTROL-C.
 ### Detalles pendientes
 
 * Mejorar las vistas con CSS.
-* Añadir los permisos de rol en cada función para cada rol.
