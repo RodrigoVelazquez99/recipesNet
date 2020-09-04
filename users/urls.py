@@ -8,5 +8,6 @@ urlpatterns = [
     path('edit_description/', login_required(edit_profile_description), name="edit_description"),
     path('edit_password/', login_required(edit_profile_password), name="edit_password"),
     path('follow/<str:email>/', login_required(follow), name="follow"),
-    path('following/', login_required(following), name="following")
+    path('following/', login_required(following), name="following"),
+    path('favourites/', login_required(favourites), name="favourite_recipes")
 ]

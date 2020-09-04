@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block head_content %}
+<title>Recetas favoritas</title>
+{% endblock %}
+
+{% block content %}
+<div class="containter px-5 pt-5">
+  <h3>Recetas favoritas</h3>
+</div>
+
+{% if recipes %}
+<div class="containter px-4 py-5">
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Imagen</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for recipe in recipes %}
+        <tr>
+          <td>{{ recipe.name }}</td>
+          <td>{{ recipe.category.name }}</td>
+          <td><img src="{{ recipe.image.url }}" alt="No se encontro la imagen"></td>
+          <td style="width: 15%" ><a class="btn btn-info" type="button" href="{% url 'get_recipe' recipe.id_recipe %}" >Ver receta</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+  <h4 style="text-align : center;">Aún no le has dado like a alguna receta</h4>
+{% endif %}
+
+{% endblock %}

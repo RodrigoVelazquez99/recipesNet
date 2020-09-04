@@ -61,3 +61,10 @@ def follow(request, email):
     other = Chef.objects.get(user__email=email)
     chef.follow_chef(other)
     return redirect("/profile/following/")
+
+# Get the recipes wich the chef likes
+def favourites(request):
+    user = request.user
+    chef = Chef.objects.get(user=user)
+    recipes = chef.recipe_likes.all()
+    return render (request, 'users/favourite_recipes.html', {'recipes' : recipes})

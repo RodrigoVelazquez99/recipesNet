@@ -49,4 +49,3 @@ Quit the server with CONTROL-C.
 
 * Mejorar las vistas con CSS.
 * Añadir los permisos de rol en cada función para cada rol.
-* Añadir la opción de ver recetas favoritas.
