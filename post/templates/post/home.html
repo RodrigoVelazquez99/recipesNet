@@ -30,6 +30,9 @@
                 <h4 class="card-title">{{ post.recipe_published.name}}</h4>
                 <h6> Autor : {{post.publisher.user.username}}</h6>
                 <h6 class="card-text"> Descripción : {{post.description}}</h6>
+                {% if post.sharer %}
+                  <h6>Compartió: {{ post.sharer.user.username }}</h6>
+                {% endif %}
               </div>
               <div class="col">
                 <img src="{{ post.recipe_published.image.url }}" alt="">

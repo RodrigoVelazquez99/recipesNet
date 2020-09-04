@@ -8,22 +8,13 @@ function like() {
     type : 'GET',
     success: function (response) {
       if (response.content.flag) {
-        var buttons = document.querySelectorAll("[id='like_button_" + id.toString() + "']");
-        for (var i = 0; i < buttons.length; i++) {
-          buttons[i].className = "btn btn-outline-success";
-          buttons[i].innerHTML = "Unlike";
-        }
+        document.getElementById('like_button_' + id.toString()).className = "btn btn-outline-success";
+        document.getElementById('like_button_' + id.toString()).innerHTML = "Unlike";
       } else {
-        var buttons = document.querySelectorAll("[id='like_button_" + id.toString() + "']");
-        for (var i = 0; i < buttons.length; i++) {
-          buttons[i].className = "btn btn-success";
-          buttons[i].innerHTML = "Like";
-        }
+        document.getElementById('like_button_' + id.toString()).className = "btn btn-success";
+        document.getElementById('like_button_' + id.toString()).innerHTML = "Like";
       }
-      var likes_count_text = document.querySelectorAll("[id='likes_count_" + id.toString() + "']")
-      for (var i = 0; i < likes_count_text.length; i++) {
-        likes_count_text[i].innerHTML = 'Likes : ' + response.content.likes_count;
-      }
+      document.getElementById('likes_count_' + id.toString()).innerHTML = 'Likes : ' + response.content.likes_count;
     }
   });
 }

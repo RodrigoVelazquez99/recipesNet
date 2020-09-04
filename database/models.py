@@ -91,6 +91,9 @@ class Chef(models.Model):
         list_post = []
         posters = Post.objects.all().order_by('-date')
         for post in posters:
+            if post.sharer != self and post.sharer not in self.followees.all() and post.sharer != None:
+                continue
+
             if post.publisher == self:
                 list_post.append(post)
 
@@ -106,9 +109,11 @@ class Chef(models.Model):
 
         return list_post
 
-    # Share a post
+    # Share a post, create a new post from existing post and add it's sharer field to self.
     def share_post(self, post):
-        post.sharers.add(self)
+        post.id_post = None
+        post.sharer = self
+        post.save()
 
     class Meta:
         db_table = "chef"
@@ -240,6 +245,7 @@ class Post(models.Model):
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     publisher = models.ForeignKey(Chef, on_delete=models.CASCADE)
+    sharer = models.ForeignKey(Chef, on_delete=models.CASCADE, related_name="post_shared", blank=True, null=True)
     recipe_published = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     sharers = models.ManyToManyField(Chef, related_name="shared_post")
     likes = models.ManyToManyField(Chef, related_name="post_likes")
