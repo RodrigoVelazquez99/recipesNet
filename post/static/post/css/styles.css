@@ -1,0 +1,18 @@
+.card {
+  min-width: 400px;
+  border-color: black;
+  max-width: 600px;
+}
+
+.card-footer {
+  border-color: black;
+}
+
+h3 {
+  text-align: center;
+}
+
+hr {
+  border-width: 2px;
+  border-color: black;
+}

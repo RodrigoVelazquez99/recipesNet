@@ -6,6 +6,11 @@ function add_coment(message) {
   list_coments.insertAdjacentHTML('beforeend', str);
 }
 
+
+$('#coment_post_modal').on('shown.bs.modal', function (event) {
+  document.getElementById('new_coment').focus();
+});
+
 // Get all coments of post when open modal
 $('#coment_post_modal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget);

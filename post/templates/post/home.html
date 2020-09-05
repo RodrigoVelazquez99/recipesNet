@@ -7,6 +7,7 @@
   <script async src="{% static 'post/js/share_post.js' %}" type="text/javascript"></script>
   <script async src="{% static 'post/js/like_post.js' %}" type="text/javascript"></script>
   <script async src="{% static 'post/js/coment_post.js' %}" type="text/javascript"></script>
+  <link rel="stylesheet" href="{% static 'post/css/styles.css' %}">
 {% endblock %}
 
 {% block content%}
@@ -23,16 +24,21 @@
 
     {% for post in list_post %}
       <div class="container offset-md-3 pt-5">
-        <div class="card" style="min-width: 400px; max-width: 600px;">
+        <div class="card">
           <div class="card-body">
+            {% if post.sharer %}
+            <div class="row">
+              <div class="col">
+                <h6>Compartió: {{ post.sharer.user.username }}</h6>
+                <hr>
+              </div>
+            </div>
+            {% endif %}
             <div class="row">
               <div class="col">
                 <h4 class="card-title">{{ post.recipe_published.name}}</h4>
                 <h6> Autor : {{post.publisher.user.username}}</h6>
                 <h6 class="card-text"> Descripción : {{post.description}}</h6>
-                {% if post.sharer %}
-                  <h6>Compartió: {{ post.sharer.user.username }}</h6>
-                {% endif %}
               </div>
               <div class="col">
                 <img src="{{ post.recipe_published.image.url }}" alt="">
@@ -43,7 +49,7 @@
             </div>
             <h5 id="likes_count_{{ post.id_post }}">Likes : {{ post.likes.count }}</h5>
           </div>
-          <div class="card-footer bg-transparent">
+          <div class="card-footer">
             <div class="container offset-lg-2">
               {% if chef in post.likes.all %}
                 <button id="like_button_{{ post.id_post }}" class="btn btn-outline-success" type="button" data-post="{{ post.id_post }}">Unlike</button>
@@ -60,7 +66,7 @@
         </div>
       </div>
     {% empty %}
-      <h3 class="container pt-4" style="text-align: center">No hay publicaciones, intenta explorar</h3>
+      <h3 class="container pt-4">No hay publicaciones, intenta explorar</h3>
     {% endfor %}
 
     <!-- Modal for create a post -->
@@ -147,8 +153,7 @@
               </div>
             </div>
             <div class="form-group offset-lg-1">
-              <input id="new_coment" type="text" name="coment" placeholder="Ingresa tu comentario" size="40" required>
-
+              <input id="new_coment" type="text" name="coment" placeholder="Ingresa tu comentario" size="40" required/>
             </div>
             <input id="id_post_coment" type="hidden">
 
