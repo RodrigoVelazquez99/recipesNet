@@ -17,7 +17,9 @@ $('#coment_post_modal').on('show.bs.modal', function (event) {
     success: function(response) {
       var list = response.content.coments;
       if (list.length == 0) {
-        add_coment("No hay comentarios");
+        str = "<h5 id='empty_coments'> No tiene comentarios </h5>";
+        list_coments.insertAdjacentHTML('beforeend', str);
+        return;
       }
       for (var key in list) {
         item = list[key];
@@ -53,6 +55,10 @@ $('#form_coment_post').on('submit', function () {
     success: function (response) {
       if (response.ok) {
         document.getElementById('new_coment').value = "";
+        var empty = document.getElementById('empty_coments');
+        if (empty) {
+          empty.parentNode.removeChild(empty);
+        }
         add_coment(new_coment);
       }
     }
