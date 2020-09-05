@@ -1,0 +1,59 @@
+.navbar-header .navbar-brand {
+  color : white;
+  font-size: 40px;
+}
+
+.navbar {
+  background-color: #3D7BB1;
+}
+
+.list-group .list-group-item {
+    background-color: white;
+    margin-right: 20px;
+    border : unset;
+}
+
+.list-group .list-group-item a {
+  color : black;
+  text-decoration : none;
+}
+
+.row {
+  grid-auto-flow: column;
+  justify-content: center;
+}
+
+.row .col h3 {
+  text-align: center;
+  padding: 70px;
+}
+
+#img_1 {
+  width: 500px;
+  height: 300px;
+}
+
+#img_2 {
+  width: 500px;
+  height: 400px;
+}
+
+#img_3 {
+  width: 500px;
+  height: 400px;
+}
+
+footer {
+  background-color: #3D7BB1;
+}
+
+footer h5 {
+  text-align: center;
+  color: white;
+  padding-bottom: 30px;
+}
+
+footer div.container a {
+  color : white;
+
+}

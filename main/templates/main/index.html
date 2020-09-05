@@ -5,6 +5,9 @@
 
     <title>RecipesNet</title>
 
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
+
     <!-- Bootstrap 4.4.1 CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
@@ -14,29 +17,73 @@
     <!-- Bootstrap 4.4.1 JS-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <nav class="navbar bg-dark">
-
-      <a class="navbar-brand" href="/home">RecipesNet</a>
-
-      <div class="container">
-
-        <ul class="nav nav-pills">
-
-          <div class="nav-item">
-            <a class="nav-link" href="{% url 'signup' %}">Registrarme</a>
-          </div>
-
-          <div class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
-          </div>
-
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <div class="navbar-brand">RecipesNet</div>
+        </div>
+        <ul class="nav navbar-nav navbar-right list-group list-group-horizontal">
+          <li class="list-group-item">
+            <a  href="{% url 'signup' %}">Registrarme</a>
+          </li>
+          <li class="list-group-item">
+            <a  href="{% url 'login' %}">Ingresar</a>
+          </li>
         </ul>
       </div>
-
     </nav>
-
-
   </head>
+
   <body>
+
+    <div class="container py-5">
+      <div class="row">
+        <div class="col">
+          <div class="container pt-5">
+            <h3> Crea y comparte tus recetas </h3>
+          </div>
+        </div>
+        <div class="col">
+          <img id="img_1" src="{% static 'main/images/index1.jpeg' %}" alt="No se encontro la imagen">
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5">
+      <div class="row py-5">
+        <div class="col">
+          <div class="container">
+            <img id="img_2" src="{% static 'main/images/index2.jpg' %}" alt="No se encontro la imagen">
+          </div>
+        </div>
+        <div class="col">
+          <div class="container pt-5">
+            <h3>Explora y aprende nuevas recetas de cocina</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5">
+      <div class="row py-5">
+        <div class="col">
+          <div class="container pt-5">
+            <h3>Sigue las recetas de tus amigos</h3>
+          </div>
+        </div>
+        <div class="col">
+          <img id="img_3" src="{% static 'main/images/index3.jpeg' %}" alt="No se encontro la imagen">
+        </div>
+      </div>
+    </div>
+
   </body>
+
+  <footer>
+    <div class="container pt-5">
+      <h5>Creado y desarrollado por
+      <a href="https://github.com/RodrigoVelazquez99">RodrigoVelazquez99</a>
+    </h5>
+    </div>
+  </footer>
 </html>
