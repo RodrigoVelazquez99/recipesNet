@@ -1,0 +1,23 @@
+.card {
+  max-width: 300px;
+  padding: 50px;
+  border-color: black;
+}
+
+.card-img-top {
+  width: 200px;
+}
+
+h4 {
+  text-align: center;
+}
+
+.title-horizontal-line {
+  border-width: 5px;
+  border-color: black;
+}
+
+.separator-horizontal-line {
+  border-width: 3px;
+  border-color: black;
+}
