@@ -16,19 +16,16 @@
 
         <div class="sidebar-header">
           <h4>Categorias</h4>
-          <hr>
+          <hr width="170px">
         </div>
 
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a href="{% url 'explore' category='all' %}">Todas las categorias</a>
-            </li>
-            {% for category in categories %}
-              <li class="nav-item">
-                <a href="{% url 'explore' category.name %}">{{category.name}}</a>
-              </li>
-            {% endfor %}
-          </ul>
+        <ul class="list-group">
+          <a class="list-group-item list-group-item-action list-group-item-primary" href="{% url 'explore' category='all' %}">Todas las categorias</a>
+          {% for category in categories %}
+            <a class="list-group-item list-group-item-action list-group-item-dark" href="{% url 'explore' category.name %}">{{category.name}}</a>
+          {% endfor %}
+        </ul>
+
 
       </nav>
     </div>
