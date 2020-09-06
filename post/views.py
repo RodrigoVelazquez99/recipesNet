@@ -30,10 +30,10 @@ def new_post(request):
             post.save()
             return redirect ('/home')
 
-# Delete the post by id
+# Delete the post by id and the post that were shared by it.
 def delete_post(request, id_post):
     deleted = Post.objects.get(id_post=id_post)
-    deleted.delete()
+    Post.objects.filter(publisher=deleted.publisher, description=deleted.description, recipe_published=deleted.recipe_published).delete()
     return redirect ('/home')
 
 # Share the post by id
