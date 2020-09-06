@@ -111,10 +111,8 @@ class Chef(models.Model):
 
     # Share a post, create a new post from existing post and add it's sharer field to self.
     def share_post(self, post):
-        post.id_post = None
-        post.sharer = self
-        post.save()
-
+        new_post = Post(description=post.description, publisher=post.publisher, sharer=self, recipe_published=post.recipe_published, original_post=post)
+        new_post.save()
     class Meta:
         db_table = "chef"
 
@@ -250,6 +248,7 @@ class Post(models.Model):
     sharers = models.ManyToManyField(Chef, related_name="shared_post")
     likes = models.ManyToManyField(Chef, related_name="post_likes")
     coments = models.ManyToManyField(Chef, related_name="post_coments", through="ComentPost")
+    original_post = models.ForeignKey("self", on_delete=models.CASCADE, related_name="copy_post", blank=True, null=True)
     def __str__(self):
         return self.description
 
