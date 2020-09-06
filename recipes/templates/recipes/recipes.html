@@ -56,23 +56,26 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Agrega los valores para la nueva receta</h5>
+            <h5 class="modal-title">Crear una receta</h5>
           </div>
             <form action="{% url 'add_recipe' %}" method="post" enctype="multipart/form-data">
               <div class="modal-body">
               {% csrf_token %}
                 <div class="form-group">
+                  <label for="name">Nombre</label>
                   <input type="text" name="name" value="{{form.data.name}}"required />
                 </div>
 
                 <div class="form-group">
+                  <label for="image">Selecciona una imagen</label>
                   <input type="file" name="image" accept="image/*" required/>
                 </div>
 
+                <label for="description">Escribe una descripción</label>
                 <div class="form-group">
-                  <textarea type="text" name="description">{{form.data.description}}</textarea>
+                  <textarea type="text" name="description"  rows="5" cols="48">{{form.data.description}}</textarea>
                 </div>
-
+                Ingresa los ingredientes
                 <div id="ingredients_list" class="container">
                   <div class="container pt-1">
                     <input type="text" name="ingredient" required>
@@ -84,8 +87,9 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="category">Selecciona una categoría</label>
                   <select class="form-control" name="category" required>
-                    <option value="">Escoge una categoria</option>
+                    <option value="">Selecciona una categoria</option>
                     {% for category in categories %}
                       <option value="{{category.pk}}">{{category.name}}</option>
                     {% endfor %}
