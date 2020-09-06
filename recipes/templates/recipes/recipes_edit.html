@@ -4,15 +4,19 @@
   <title>Editar recetas</title>
   {% load static%}
   <script async type="text/javascript" src="{% static 'recipes/js/delete_recipe.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
 {% endblock %}
 
 {% block content%}
 
+  <div class="container py-4">
+    <h1>Editar</h1>
+  </div>
 
   <div class="container pt-3">
     {% if recipes %}
-      <table class="table table-bordered">
-        <thead class="thread-dark">
+      <table class="table">
+        <thead class="thead-dark">
           <tr>
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
@@ -25,19 +29,19 @@
         <tbody>
           {% for recipe in recipes %}
             <tr>
-              <td>{{recipe.name}}</td>
-              <td>{{recipe.description}}</td>
-              <td>{{recipe.category}}</td>
-              <td><img src="{{recipe.image.url}}" alt="No se pudo cargar la imagen"></td>
-              <td><a type="button" class="btn btn-info" href="{% url 'edit_recipe' recipe.id_recipe %}">Editar</a></td>
-              <td><button class="btn btn-danger" data-recipe="{{ recipe.id_recipe }}" data-name="{{ recipe.name }}"
+              <td class="cell">{{recipe.name}}</td>
+              <td class="cell">{{recipe.description}}</td>
+              <td class="cell">{{recipe.category}}</td>
+              <td class="cell" width="20%"><img src="{{recipe.image.url}}" alt="No se pudo cargar la imagen"></td>
+              <td class="cell" width="5%"><a type="button" class="btn btn-info" href="{% url 'edit_recipe' recipe.id_recipe %}">Editar</a></td>
+              <td class="cell" width="10%"><button class="btn btn-danger" data-recipe="{{ recipe.id_recipe }}" data-name="{{ recipe.name }}"
                     data-toggle="modal" data-target="#delete_recipe_modal">Eliminar</button></td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
     {% else %}
-      <h3 style="text-align:center">Aún no tienes recetas</h3>
+      <h3>Aún no tienes recetas</h3>
     {% endif %}
   </div>
 
@@ -60,7 +64,7 @@
   </div>
 
   <div class="container py-5">
-    <a class="btn btn-info" href="{% url 'recipes' %}" type="button">Volver</a>
+    <a class="btn btn-secondary" href="{% url 'recipes' %}" type="button">Volver</a>
   </div>
 
 {% endblock %}
