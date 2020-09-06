@@ -2,6 +2,8 @@
 
 {% block head_content %}
 <title>Siguiendo</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'users/css/styles.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -23,14 +25,14 @@
         {% for followee in followees %}
           <tr>
             <td>{{ followee.user.username }}</td>
-            <td style="width: 15%" ><a class="btn btn-danger" type="button" href="{% url 'follow' followee.user.email %}" >Dejar de seguir</a></td>
+            <td class="button-col"><a class="btn btn-danger" type="button" href="{% url 'follow' followee.user.email %}" >Dejar de seguir</a></td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 {% else %}
-  <h4 style="text-align : center;">Aún no sigues personas</h4>
+  <h4>Aún no sigues personas</h4>
 {% endif %}
 
 {% endblock %}
