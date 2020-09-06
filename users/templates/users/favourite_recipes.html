@@ -2,6 +2,8 @@
 
 {% block head_content %}
 <title>Recetas favoritas</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -23,17 +25,17 @@
     <tbody>
       {% for recipe in recipes %}
         <tr>
-          <td>{{ recipe.name }}</td>
-          <td>{{ recipe.category.name }}</td>
-          <td><img src="{{ recipe.image.url }}" alt="No se encontro la imagen"></td>
-          <td style="width: 15%" ><a class="btn btn-info" type="button" href="{% url 'get_recipe' recipe.id_recipe %}" >Ver receta</a></td>
+          <td class="cell">{{ recipe.name }}</td>
+          <td class="cell">{{ recipe.category.name }}</td>
+          <td class="cell"><img src="{{ recipe.image.url }}" alt="No se encontro la imagen"></td>
+          <td class="cell" width="10%"><a class="btn btn-info" type="button" href="{% url 'get_recipe' recipe.id_recipe %}" >Ver receta</a></td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
 {% else %}
-  <h4 style="text-align : center;">Aún no le has dado like a alguna receta</h4>
+  <h4>Aún no le has dado like a alguna receta</h4>
 {% endif %}
 
 {% endblock %}
