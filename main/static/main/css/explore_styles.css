@@ -1,0 +1,29 @@
+
+.navbar-explore {
+  background-color: white;
+  border-color: black;
+}
+
+.sticky-top {
+  top: 85px;
+}
+
+.nav-pills .nav-item a {
+  text-decoration : none;
+}
+
+.card {
+  max-width: 300px;
+  min-width: 300px;
+  padding: 50px;
+  border-color: black;
+}
+
+#empty_recipes {
+  text-align: center;
+}
+
+hr {
+  border-color: black;
+  border-width: 2px;
+}
