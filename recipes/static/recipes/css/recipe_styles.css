@@ -1,0 +1,28 @@
+.card {
+  padding: 10px;
+  border-color: black;
+}
+hr {
+  border-color: black;
+  border-width: 1px;
+}
+
+.col-img {
+  vertical-align: bottom;
+}
+
+.img-recipe {
+  position: relative;
+  top: 20%;
+  left: 20%;
+}
+/*
+img {
+  position: absolute;
+  left :0;
+  top: 0;
+  bottom: 20;
+  right: 0;
+  margin: auto;
+
+}*/

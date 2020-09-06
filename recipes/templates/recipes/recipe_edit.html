@@ -8,19 +8,23 @@
 
 {% block content%}
 
-  <div class="container pt-5 offset-lg-4">
+  <div class="container py-5 offset-lg-4">
     <form action="{% url 'edit_recipe' recipe.id_recipe %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form-group">
+        <label for="name">Nombre</label>
         <input type="text" name="name" value="{{recipe.name}}"required />
       </div>
+      <label for="image">Selecciona una imagen</label>
       <div class="form-group">
         <input type="file" name="image" accept="image/*" required/>
       </div>
+      <label for="description">Escribe una descripción</label>
       <div class="form-group">
-        <textarea type="text" name="description">{{recipe.description}}</textarea>
+        <textarea type="text" rows="5" cols="40" name="description">{{recipe.description}}</textarea>
       </div>
       <div class="form-group">
+        <label for="category">Selecciona una categoria</label>
         <select name="category" required>
           <option value="{{ recipe.category.pk }}">{{recipe.category.name}}</option>
           {% for category in categories %}

@@ -5,17 +5,19 @@
 {% load static %}
 <script async type="text/javascript" src="{% static 'recipes/js/coment_recipe.js' %}" ></script>
 <script async type="text/javascript" src="{% static 'recipes/js/like_recipe.js' %}"></script>
+<link rel="stylesheet" href="{% static 'recipes/css/recipe_styles.css' %}">
 {% endblock %}
 
 {% block content%}
 <div class="container">
   <div class="row justify-content-center">
 
-    <div class="col">
+    <div class="container pt-5">
+      <h1>{{recipe.name}}</h1>
+      <hr>
+    </div>
 
-      <div class="container pt-5">
-        <h1>{{recipe.name}}</h1>
-      </div>
+    <div class="col">
 
       <div class="container pt-3">
         <h5>Categoría</h5>
@@ -24,9 +26,11 @@
 
       <div class="container pt-3">
         <h5>Ingredientes</h5>
-        {% for ingredient in ingredients %}
-          {{ingredient.ingredient}}<br></br>
-        {% endfor %}
+        <ul>
+          {% for ingredient in ingredients %}
+          <li>{{ingredient.ingredient}}</li><br></br>
+          {% endfor %}
+        </ul>
       </div>
 
       <div class="container pt-3">
@@ -35,17 +39,22 @@
       </div>
 
       <div class="container pt-3">
-        <h5>Comentarios</h5>
-        {% if not coments %}
-          No hay comentarios
-        {% else %}
-        {% for coment in coments %}
-          {{coment.message}}<br></br>
-        {% endfor %}
-        {% endif %}
-        <div class="container pt-2">
-          <button class="btn btn-info" type="button" name="button" data-recipe="{{ recipe.id_recipe }}" data-toggle="modal" data-target="#coment_modal">Agregar comentario</button>
-        </div>
+          <div class="card">
+            <h5>Comentarios</h5>
+            {% if not coments %}
+              No hay comentarios
+            {% else %}
+            {% for coment in coments %}
+            <hr>
+            {{coment.chef}} |
+            {{coment.date}} <br></br>
+              {{coment.message}}<br></br>
+            {% endfor %}
+            {% endif %}
+          </div>
+          <div class="container pt-2 offset-sm-7">
+            <button class="btn btn-info" type="button" name="button" data-recipe="{{ recipe.id_recipe }}" data-toggle="modal" data-target="#coment_modal">Agregar comentario</button>
+          </div>
       </div>
 
       <div class="container pt-3 pb-5">
@@ -63,8 +72,10 @@
     </div>
 
     <div class="col">
-      <div class="container pt-5">
-        <img src="{{recipe.image.url}}" alt="No se pudo cargar la imagen">
+      <div class="container pt-5 col-img">
+        <div class="img-recipe">
+          <img src="{{recipe.image.url}}" alt="No se pudo cargar la imagen">
+        </div>
       </div>
     </div>
 
