@@ -4,9 +4,14 @@
   <title>Mis recetas</title>
   {% load static %}
   <script async type="text/javascript" src="{% static 'recipes/js/add_ingredient.js' %}" ></script>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
 {% endblock %}
 
 {% block content%}
+
+  <div class="container pt-5">
+    <h1>Mis recetas</h1>
+  </div>
 
   {% if recipes %}
     <div class="container pt-5">
@@ -16,7 +21,7 @@
 
   <div class="container pt-3">
     {% if recipes %}
-      <table class="table table-bordered">
+      <table class="table">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Nombre</th>
@@ -29,22 +34,22 @@
         <tbody>
           {% for recipe in recipes %}
             <tr>
-              <td>{{recipe.name}}</td>
-              <td>{{recipe.description}}</td>
-              <td>{{recipe.category}}</td>
-              <td> <img src="{{recipe.image.url}}" alt="No se pudo cargar la imagen"></td>
-              <td><a class="btn btn-info" href="{% url 'get_recipe' recipe.id_recipe %}">Ver</a></td>
+              <td class="cell">{{recipe.name}}</td>
+              <td class="cell">{{recipe.description}}</td>
+              <td class="cell">{{recipe.category}}</td>
+              <td class="cell" width="20%"> <img src="{{recipe.image.url}}" alt="No se pudo cargar la imagen"></td>
+              <td class="cell" width="5%"><a class="btn btn-info" href="{% url 'get_recipe' recipe.id_recipe %}">Ver</a></td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
     {% else %}
-      <h3 style="text-align:center">Aún no tienes recetas</h3>
+      <h4>Aún no tienes recetas</h4>
     {% endif %}
   </div>
 
-  <div class="container py-5">
-    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#new_recipe_modal">Agregar</button>
+  <div class="container py-5 px-5">
+    <button class="btn btn-block btn-success" type="button" data-toggle="modal" data-target="#new_recipe_modal">Agregar</button>
   </div>
 
   <div class="modal fade" role="dialog" id="new_recipe_modal">
