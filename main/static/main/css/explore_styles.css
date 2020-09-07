@@ -4,10 +4,6 @@
   border-color: black;
 }
 
-.sticky-top {
-  top: 85px;
-}
-
 .nav-pills .nav-item a {
   text-decoration : none;
 }
