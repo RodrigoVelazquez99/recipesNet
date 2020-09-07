@@ -1,8 +1,8 @@
 list_coments = document.getElementById('coments_post');
 
 // Add the message to modal
-function add_coment(message) {
-  str = "<h6>" + message + "</h6>";
+function add_coment(chef, message, date) {
+  str = "<h6>" + chef + " | " +  date + "</h6>" + message + "<hr>";
   list_coments.insertAdjacentHTML('beforeend', str);
 }
 
@@ -28,7 +28,7 @@ $('#coment_post_modal').on('show.bs.modal', function (event) {
       }
       for (var key in list) {
         item = list[key];
-        add_coment(item.message);
+        add_coment(item.chef, item.message, item.date);
       }
     }
   });
@@ -64,7 +64,7 @@ $('#form_coment_post').on('submit', function () {
         if (empty) {
           empty.parentNode.removeChild(empty);
         }
-        add_coment(new_coment);
+        add_coment(response.user, new_coment, response.date);
       }
     }
   });

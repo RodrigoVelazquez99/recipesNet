@@ -272,7 +272,8 @@ class Post(models.Model):
     # chef : Chef who coment the post.
     # msg : the coment.
     def add_coment(self, chef, msg):
-        ComentPost.objects.create(post=self, chef=chef, message=msg)
+        coment = ComentPost.objects.create(post=self, chef=chef, message=msg)
+        return coment.date
 
 
     def __hash__(self):
