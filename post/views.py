@@ -73,7 +73,6 @@ def coment_post(request, id_post):
         post = Post.objects.get(id_post=id_post)
         coments = list(post.post_coments.all().values('message', 'date', 'chef_id'))
         coments = [ { 'message' : d['message'], 'date' : d['date'].strftime("%b. %d, %Y, %I:%M %p"), 'chef' : get_chef_username(d['chef_id']) } for d in coments ]
-        print (coments)
         data = {
             'content' : {
                 'coments' : coments
