@@ -2,7 +2,7 @@ list_coments = document.getElementById('coments_post');
 
 // Add the message to modal
 function add_coment(message) {
-  str = "<h5>" + message + "</h5>";
+  str = "<h6>" + message + "</h6>";
   list_coments.insertAdjacentHTML('beforeend', str);
 }
 
