@@ -7,6 +7,11 @@
   background-color: #3D7BB1;
 }
 
+.admin-navbar {
+  color : white;
+  font-size: 40px;
+}
+
 .list-group .list-group-item {
     background-color: white;
     margin-right: 20px;
