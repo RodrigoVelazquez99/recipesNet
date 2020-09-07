@@ -3,7 +3,7 @@
 {% block head_content %}
 <title>Siguiendo</title>
 {% load static %}
-<link rel="stylesheet" href="{% static 'users/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
 
 {% if followees %}
   <div class="containter px-4 py-5">
-    <table class="table table-bordered">
+    <table class="table">
       <thead class="thead-dark">
         <tr>
           <th>Nombre</th>
@@ -24,15 +24,17 @@
       <tbody>
         {% for followee in followees %}
           <tr>
-            <td>{{ followee.user.username }}</td>
-            <td class="button-col"><a class="btn btn-danger" type="button" href="{% url 'follow' followee.user.email %}" >Dejar de seguir</a></td>
+            <td class="cell">{{ followee.user.username }}</td>
+            <td class="cell" width="15%"><a class="btn btn-danger" type="button" href="{% url 'follow' followee.user.email %}" >Dejar de seguir</a></td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 {% else %}
-  <h4>Aún no sigues personas</h4>
+  <div class="containter pt-5">
+    <h4>Aún no sigues personas.</h4>
+  </div>
 {% endif %}
 
 {% endblock %}
